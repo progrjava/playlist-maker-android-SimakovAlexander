@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.components
+package com.practicum.playlistmaker.ui.components.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

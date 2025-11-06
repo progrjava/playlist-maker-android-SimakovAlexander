@@ -3,7 +3,8 @@ package com.practicum.playlistmaker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.practicum.playlistmaker.ui.components.CustomTopBar
+import androidx.compose.ui.res.stringResource
+import com.practicum.playlistmaker.ui.components.common.CustomTopBar
 import com.practicum.playlistmaker.ui.theme.PlaylistMakerTheme
 
 class SettingsActivity : ComponentActivity() {
@@ -14,7 +15,7 @@ class SettingsActivity : ComponentActivity() {
                 CustomTopBar(
                     showBackButton = true,
                     onBackClick = { finish() },
-                    text = "Настройки"
+                    text = stringResource(R.string.settings_title)
                 )
             }
         }

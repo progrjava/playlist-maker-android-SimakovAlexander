@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.components
+package com.practicum.playlistmaker.ui.components.main
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -16,13 +16,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.practicum.playlistmaker.ui.theme.IconPrimary
+import com.practicum.playlistmaker.ui.theme.IconSecondary
+import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun MenuRow(
     title: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     onClick: () -> Unit
 ) {
     Row(
@@ -37,7 +40,7 @@ fun MenuRow(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = Color.Black
+            tint = IconPrimary
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -46,14 +49,14 @@ fun MenuRow(
             text = title,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.weight(1f),
-            color = Color.Black
+            color = TextPrimary
         )
 
         Icon(
             imageVector = Icons.Outlined.ChevronRight,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = Color.Gray
+            tint = IconSecondary
         )
     }
 }

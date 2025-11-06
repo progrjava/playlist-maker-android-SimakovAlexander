@@ -15,20 +15,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme = darkColorScheme(
-    primary = BluePrimary
+    primary = BluePrimary,
+    onPrimary = TextOnPrimary,
+    surface = BackgroundPrimary,
+    onSurface = TextPrimary,
+    background = BackgroundPrimary,
+    onBackground = TextPrimary,
+    outline = GrayLight
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = BluePrimary
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = BluePrimary,
+    onPrimary = TextOnPrimary,
+    surface = BackgroundPrimary,
+    onSurface = TextPrimary,
+    background = BackgroundPrimary,
+    onBackground = TextPrimary,
+    outline = GrayLight
 )
 
 
