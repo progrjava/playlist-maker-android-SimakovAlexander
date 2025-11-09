@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -10,9 +9,6 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme = darkColorScheme(
     primary = BluePrimary,
@@ -21,7 +17,7 @@ private val DarkColorScheme = darkColorScheme(
     onSurface = TextPrimary,
     background = BackgroundPrimary,
     onBackground = TextPrimary,
-    outline = GrayLight
+    outline = GrayLight,
 )
 
 private val LightColorScheme = lightColorScheme(

@@ -17,8 +17,14 @@ val BackgroundBrand = Color(0xFF3772E7)
 
 // Иконки
 val IconPrimary = Color(0xFF000000)
-val IconSecondary = Color(0xFF666666)
+val IconSecondary = Color(0xFFBDBDBD)
 val IconHint = Color(0xFFBDBDBD)
+
+// Переключатели
+val SwitchUncheckedKnob = Color(0xFFAEAFB4)
+val SwitchUncheckedTrack = Color(0xFFE6E8EB)
+val SwitchCheckedKnob = Color(0xFF3772E7)
+val SwitchCheckedTrack = Color(0xFF284581)
 
 // Состояния
 val Transparent = Color.Transparent

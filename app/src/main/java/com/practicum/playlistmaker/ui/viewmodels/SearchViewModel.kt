@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.models
+package com.practicum.playlistmaker.ui.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
