@@ -11,9 +11,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.practicum.playlistmaker.ui.screens.main.MainScreen
-import com.practicum.playlistmaker.ui.screens.search.SearchScreen
-import com.practicum.playlistmaker.ui.screens.settings.SettingsScreen
+import com.practicum.playlistmaker.ui.main.MainScreen
+import com.practicum.playlistmaker.ui.search.SearchScreen
+import com.practicum.playlistmaker.ui.settings.SettingsScreen
 
 @Composable
 fun PlaylistHost(navController: NavHostController) {

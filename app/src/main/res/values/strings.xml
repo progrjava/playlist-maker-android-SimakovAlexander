@@ -21,4 +21,5 @@
     <string name="support_body">Спасибо разработчикам и разработчицам за крутое приложение!</string>
 
     <string name="user_agreement_link">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="title_activity_my_application">MyApplication</string>
 </resources>

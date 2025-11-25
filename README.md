@@ -4,6 +4,18 @@
 
 ---
 
+## Sprint 5
+
+### Что реализовано в Спринте 5:
+- Подготовлена архитектура приложения на базе Clean Architecture: разделение на пакеты `data`, `domain`, `ui`, `creator`.
+- Создан эмулятор сервера (`Storage`) с локальным списком треков и функцией `search()`.
+- Реализован слой **Data**: DTO, модели ответа, запросы, NetworkClient, RepositoryImpl.
+- Реализован слой **Domain** с интерфейсами `NetworkClient` и `TracksRepository`.
+- Репозиторий возвращает обработанные данные (`Track`) и готов к подключению в будущей `SearchViewModel`.
+- Частично применён принцип YAGNI — исключены ненужные Interactor-слои.
+- Настроено создание зависимостей (Storage → NetworkClient → Repository) в пакете `creator`.
+- Обновлена структура проекта, `MainActivity` перенесён в `ui/activity`, исправлен путь в манифесте.
+
 ## Sprint 4
 
 ### Что реализовано в Спринте 4:
@@ -32,6 +44,7 @@
 ## Чек-листы самопроверки:
 - [checklists/sprint-3.md](checklists/sprint-3.md)
 - [checklists/sprint-4.md](checklists/sprint-4.md)
+- [checklists/sprint-5.md](checklists/sprint-5.md)
 
 ---
 
