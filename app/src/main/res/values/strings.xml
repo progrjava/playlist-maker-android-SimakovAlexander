@@ -6,7 +6,11 @@
     <string name="favourites_title">Избранное</string>
     <string name="settings_title">Настройки</string>
 
-    <string name="search_hint">Поиск...</string>
+    <string name="search_hint">Поиск…</string>
+    <string name="search_initial">Начнем поиск треков!</string>
+    <string name="search_searching">Ищем треки…</string>
+    <string name="search_nothing_found">Ничего не нашлось</string>
+    <string name="search_error">Упс! Произошла ошибка</string>
 
     <string name="dark_mode_switch">Темная тема</string>
     <string name="share_app">Поделиться приложением</string>

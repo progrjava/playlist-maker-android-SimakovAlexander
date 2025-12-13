@@ -4,6 +4,17 @@
 
 ---
 
+## Sprint 6
+
+### Что реализовано в Спринте 6:
+- Реализован полноценный экран поиска треков на Jetpack Compose.
+- Создана `SearchViewModel` с управлением состояниями экрана.
+- Описаны состояния экрана через `sealed class SearchState (Initial, Searching, Success, Fail)`.
+- Настроено реактивное обновление UI через `StateFlow` и `collectAsState()`.
+- Реализована обработка всех состояний поиска: начальное, загрузка, успешный результат, ошибка.
+- Подключён репозиторий поиска во `ViewModel` через фабрику и пакет `creator`.
+- Закреплены принципы MVVM и разделения ответственности между слоями.
+
 ## Sprint 5
 
 ### Что реализовано в Спринте 5:
@@ -45,6 +56,7 @@
 - [checklists/sprint-3.md](checklists/sprint-3.md)
 - [checklists/sprint-4.md](checklists/sprint-4.md)
 - [checklists/sprint-5.md](checklists/sprint-5.md)
+- [checklists/sprint-6.md](checklists/sprint-6.md)
 
 ---
 
@@ -59,3 +71,5 @@
 ## История версий:
 - **v3.0** - Спринт 3: Главный экран и навигация
 - **v4.0** - Спринт 4: Экраны поиска и настроек + навигация
+- **v5.0** - Спринт 5: MVVM, слои data и domain
+- **v6.0** — Спринт 6: Экран поиска, список треков, ViewModel, SearchState

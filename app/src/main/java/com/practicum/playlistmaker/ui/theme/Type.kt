@@ -59,7 +59,7 @@ val YandexSansTypography = Typography(
     titleMedium = TextStyle(
         fontFamily = YandexSansFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
+        fontSize = 19.sp,
     ),
     titleSmall = TextStyle(
         fontFamily = YandexSansFontFamily,

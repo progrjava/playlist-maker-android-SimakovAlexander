@@ -8,11 +8,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.practicum.playlistmaker.ui.main.MainScreen
 import com.practicum.playlistmaker.ui.search.SearchScreen
+import com.practicum.playlistmaker.ui.search.viewModel.SearchViewModel
 import com.practicum.playlistmaker.ui.settings.SettingsScreen
 
 @Composable
@@ -73,7 +75,12 @@ fun PlaylistHost(navController: NavHostController) {
         }
 
         composable(Screen.SEARCH.route) {
+            val viewModel: SearchViewModel = viewModel(
+                factory = SearchViewModel.getViewModelFactory()
+            )
+
             SearchScreen(
+                viewModel = viewModel,
                 onBackClick = { navController.popBackStack() }
             )
         }

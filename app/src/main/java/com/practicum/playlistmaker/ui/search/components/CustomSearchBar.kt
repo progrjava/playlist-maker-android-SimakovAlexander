@@ -35,11 +35,13 @@ import com.practicum.playlistmaker.ui.theme.TextPrimary
 fun SearchBarCustom(
     query: String,
     onQueryChange: (String) -> Unit,
-    onClearClick: () -> Unit
+    onClearClick: () -> Unit,
+    onSearchClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 16.dp)
             .height(36.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(color = BackgroundSecondary)
@@ -49,7 +51,7 @@ fun SearchBarCustom(
         Icon(
             imageVector = Icons.Default.Search,
             contentDescription = null,
-            modifier = Modifier.size(19.dp),
+            modifier = Modifier.size(19.dp).clickable { onSearchClick() },
             tint = IconHint
         )
 
