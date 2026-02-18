@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.practicum.playlistmaker.ui.playlist.PlaylistsScreen
 import com.practicum.playlistmaker.ui.main.MainScreen
 import com.practicum.playlistmaker.ui.search.SearchScreen
 import com.practicum.playlistmaker.ui.search.viewModel.SearchViewModel
@@ -55,11 +56,7 @@ fun PlaylistHost(navController: NavHostController) {
                     navController.navigate(Screen.SEARCH.route)
                 },
                 onPlaylistsClick = {
-                    Toast.makeText(
-                        context,
-                        "Нажата кнопка \"Плейлисты\"",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    navController.navigate(Screen.PLAYLISTS.route)
                 },
                 onFavoritesClick = {
                     Toast.makeText(
@@ -89,6 +86,10 @@ fun PlaylistHost(navController: NavHostController) {
             SettingsScreen(
                 onBackClick = { navController.popBackStack() }
             )
+        }
+
+        composable(Screen.PLAYLISTS.route) {
+            PlaylistsScreen()
         }
     }
 }
