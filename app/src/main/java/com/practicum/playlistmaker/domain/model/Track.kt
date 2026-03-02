@@ -1,10 +1,10 @@
-package com.practicum.playlistmaker.data.dto
+package com.practicum.playlistmaker.domain.model
 
-data class TrackDto(
+data class Track(
     val id: Long,
     val trackName: String,
     val artistName: String,
-    val trackTimeMillis: Int,
+    val trackTime: String,
     val image: String,
     var favorite: Boolean,
     var playlistId: Long

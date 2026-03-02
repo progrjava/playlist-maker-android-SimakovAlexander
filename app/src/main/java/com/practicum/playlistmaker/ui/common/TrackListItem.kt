@@ -1,8 +1,7 @@
 package com.practicum.playlistmaker.ui.common
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,25 +23,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.data.network.Track
+import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.theme.IconHint
 import com.practicum.playlistmaker.ui.theme.IconSecondary
 import com.practicum.playlistmaker.ui.theme.TextHint
 import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
-fun TrackListItem(track: Track) {
+fun TrackListItem(
+    track: Track,
+    onLongClick: (() -> Unit)? = null,
+    onClick: () -> Unit
+) {
     val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                Toast.makeText(
-                    context,
-                    "Трек: ${track.trackName}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }.padding(horizontal = 12.dp, vertical = 8.dp),
+            .combinedClickable(
+                onClick = { onClick() },
+                onLongClick = { onLongClick?.invoke() }
+            )
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {

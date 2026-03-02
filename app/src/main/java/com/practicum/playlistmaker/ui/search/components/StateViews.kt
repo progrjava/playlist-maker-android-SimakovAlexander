@@ -1,10 +1,15 @@
 package com.practicum.playlistmaker.ui.search.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,11 +22,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.data.network.Track
+import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CircularProgressIndicator
 import com.practicum.playlistmaker.ui.common.TrackListItem
 import com.practicum.playlistmaker.ui.theme.BluePrimary
@@ -59,28 +65,32 @@ fun SearchingView() {
 }
 
 @Composable
-fun SuccessView(tracks: List<Track>) {
-    if (tracks.isEmpty()) {
-        CenteredColumn {
-            Image(
-                painter = painterResource(R.drawable.nothing_found),
-                contentDescription = null,
-                modifier = Modifier.size(120.dp)
+fun NothingFoundView() {
+    CenteredColumn {
+        Image(
+            painter = painterResource(R.drawable.nothing_found),
+            contentDescription = null,
+            modifier = Modifier.size(120.dp)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            stringResource(R.string.search_nothing_found),
+            style = MaterialTheme.typography.titleMedium,
+            color = TextPrimary
+        )
+    }
+}
+
+@Composable
+fun FoundTracksView(tracks: List<Track>, onClick: (Int?) -> Unit) {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        items(tracks.size) { index ->
+            TrackListItem(
+                track = tracks[index],
+                onClick = { onClick(index) }
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                stringResource(R.string.search_nothing_found),
-                style = MaterialTheme.typography.titleMedium,
-                color = TextPrimary
-            )
-        }
-    } else {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(top = 24.dp)
-        ) {
-            items(tracks.size) { index ->
-                TrackListItem(track = tracks[index])
-            }
         }
     }
 }
@@ -110,11 +120,12 @@ fun FailView(error: String) {
 
 @Composable
 fun CenteredColumn(content: @Composable ColumnScope.() -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 126.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        content = content
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            content = content
+        )
+    }
 }

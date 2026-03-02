@@ -21,6 +21,7 @@ import com.practicum.playlistmaker.ui.settings.SettingsScreen
 @Composable
 fun PlaylistHost(navController: NavHostController) {
     val context = LocalContext.current
+    val searchViewModel: SearchViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -72,12 +73,9 @@ fun PlaylistHost(navController: NavHostController) {
         }
 
         composable(Screen.SEARCH.route) {
-            val viewModel: SearchViewModel = viewModel(
-                factory = SearchViewModel.getViewModelFactory()
-            )
-
             SearchScreen(
-                viewModel = viewModel,
+                searchViewModel = searchViewModel,
+                onClick = {  },
                 onBackClick = { navController.popBackStack() }
             )
         }

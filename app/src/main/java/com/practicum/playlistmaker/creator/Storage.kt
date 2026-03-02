@@ -2,7 +2,7 @@ package com.practicum.playlistmaker.creator
 
 import com.practicum.playlistmaker.data.dto.TrackDto
 
-class Storage {
+/*class Storage {
     private val listTracks = listOf(
         TrackDto(
             trackName = "Владивосток 2000",
@@ -64,4 +64,4 @@ class Storage {
         }
         return result
     }
-}
+}*/
