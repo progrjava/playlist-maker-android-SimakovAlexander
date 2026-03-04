@@ -14,16 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.theme.IconSecondary
 
 @Composable
 fun AddFloatingButton(
-    modifier: Modifier,
     callback: () -> Unit
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
             modifier = Modifier
                 .padding(end = 17.dp, bottom = 30.dp)
@@ -38,16 +39,8 @@ fun AddFloatingButton(
             Icon(
                 modifier = Modifier.size(36.dp),
                 imageVector = Icons.Filled.Add,
-                contentDescription = null
+                contentDescription = stringResource(R.string.create_something)
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FloatButtonExamplePreview(){
-    AddFloatingButton(modifier = Modifier){
-        // Для работы превью
     }
 }

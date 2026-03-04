@@ -6,19 +6,23 @@ import com.practicum.playlistmaker.data.network.SearchHistoryRepositoryImpl
 import com.practicum.playlistmaker.data.network.TracksRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 @OptIn(FlowPreview::class)
 class SearchViewModel(): ViewModel() {
-    private val tracksRepository = TracksRepositoryImpl()
+    private val tracksRepository = TracksRepositoryImpl(scope = viewModelScope)
     private val searchHistoryRepository = SearchHistoryRepositoryImpl(scope = viewModelScope)
     private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
     private val _searchScreenState = MutableStateFlow<SearchState>(SearchState.Initial)
     val searchScreenState = _searchScreenState.asStateFlow()
 
@@ -43,6 +47,7 @@ class SearchViewModel(): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _searchScreenState.update { SearchState.Searching }
+                delay(1000)
                 searchHistoryRepository.addToHistory(request)
                 val list = tracksRepository.searchTracks(expression = request)
                 if (list.isEmpty()) {

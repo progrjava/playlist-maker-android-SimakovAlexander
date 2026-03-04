@@ -5,6 +5,7 @@
     <string name="playlists_title">Плейлисты</string>
     <string name="favourites_title">Избранное</string>
     <string name="settings_title">Настройки</string>
+    <string name="new_playlist_title">Новый плейлист</string>
 
     <string name="search_hint">Введите название трека</string>
     <string name="search_initial">Начнем поиск треков!</string>
@@ -26,4 +27,14 @@
 
     <string name="user_agreement_link">https://yandex.ru/legal/practicum_offer/</string>
     <string name="title_activity_my_application">MyApplication</string>
+
+    <string name="new_playlist_name">Название*</string>
+    <string name="new_playlist_description">Описание</string>
+    <string name="new_playlist_create">Создать</string>
+    <string name="create_something">Create something</string>
+
+    <string name="add_track_to_playlist">Добавить в плейлист</string>
+    <string name="playlists_not_found">Плейлистов не найдено :(</string>
+    <string name="add_track_to_favorites">Добавить в избранные</string>
+    <string name="track_duration">Длительность</string>
 </resources>

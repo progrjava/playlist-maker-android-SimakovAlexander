@@ -82,14 +82,14 @@ fun NothingFoundView() {
 }
 
 @Composable
-fun FoundTracksView(tracks: List<Track>, onClick: (Int?) -> Unit) {
+fun FoundTracksView(tracks: List<Track>, onClick: (Track) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
     ) {
         items(tracks.size) { index ->
             TrackListItem(
                 track = tracks[index],
-                onClick = { onClick(index) }
+                onClick = { onClick(tracks[index]) }
             )
         }
     }

@@ -14,6 +14,7 @@ val TextOnPrimary = Color(0xFFFFFFFF)
 val BackgroundPrimary = Color(0xFFFFFFFF)
 val BackgroundSecondary = Color(0xFFE6E8EB)
 val BackgroundBrand = Color(0xFF3772E7)
+val GrayBackground = Color(0xFFAEAFB4)
 
 // Иконки
 val IconPrimary = Color(0xFF000000)

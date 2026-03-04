@@ -22,6 +22,9 @@ tracingPerfettoHandshake = "1.0.0"
 koinAndroid = "4.1.0"
 runtime = "1.10.0"
 runtimeVersion = "1.10.3"
+foundationLayoutVersion = "1.10.4"
+animation = "1.10.4"
+media3Database = "1.9.2"
 
 [libraries]
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
@@ -54,6 +57,9 @@ androidx-tracing-perfetto-handshake = { group = "androidx.tracing", name = "trac
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 androidx-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtimeVersion" }
+androidx-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayoutVersion" }
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
+androidx-media3-database = { group = "androidx.media3", name = "media3-database", version.ref = "media3Database" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

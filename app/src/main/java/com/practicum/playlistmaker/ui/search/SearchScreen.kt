@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.search.components.FailView
 import com.practicum.playlistmaker.ui.search.components.FoundTracksView
@@ -44,12 +45,12 @@ import com.practicum.playlistmaker.ui.theme.IconHint
 @Composable
 fun SearchScreen(
     searchViewModel: SearchViewModel,
-    onClick: (Int?) -> Unit,
+    onTrackClick: (Track) -> Unit,
     onBackClick: () -> Unit
 ) {
     val screenState by searchViewModel.searchScreenState.collectAsState()
     var historyList by remember { mutableStateOf<List<String>>(emptyList()) }
-    var text by remember { mutableStateOf("") }
+    val text by searchViewModel.searchQuery.collectAsState()
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -101,11 +102,11 @@ fun SearchScreen(
                 ) {
                     SearchBarCustom(
                         text = text,
-                        onValueChange = { text = it},
+                        onValueChange = { searchViewModel.updateQuery(it) },
                         focusRequester = focusRequester,
                         onFocusChanged = { isFocused = it },
                         onClearSearch = {
-                            text = ""
+                            searchViewModel.updateQuery("")
                             searchViewModel.clearSearch()
                         }
                     )
@@ -119,7 +120,7 @@ fun SearchScreen(
                         HistoryRequests(
                             historyList = historyList,
                             onClick = { word ->
-                                text = word
+                                searchViewModel.updateQuery(word)
                             }
                         )
                     }
@@ -129,7 +130,9 @@ fun SearchScreen(
                 if (screenState is SearchState.Success.WithTracks) {
                     FoundTracksView(
                         (screenState as SearchState.Success.WithTracks).tracks,
-                        onClick = onClick
+                        onClick = { track ->
+                            onTrackClick(track)
+                        }
                     )
                 }
             }

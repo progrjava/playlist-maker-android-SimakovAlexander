@@ -1,22 +1,62 @@
 package com.practicum.playlistmaker.data.network
 
+import com.practicum.playlistmaker.data.local.DatabaseMock
+import com.practicum.playlistmaker.data.local.DatabaseProvider
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.TracksRepository
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 
-class TracksRepositoryImpl() : TracksRepository {
-    override suspend fun getAllTracks(): List<Track> {
-        delay(1000)// Имитируем запрос к серверу
-        return listTracks
-    }
+class TracksRepositoryImpl(
+    private val scope: CoroutineScope
+) : TracksRepository {
+    private val database = DatabaseProvider.getDatabase(scope)
 
     override suspend fun searchTracks(expression: String): List<Track> {
+        return database.searchTracks(expression)
+    }
+
+    /*override suspend fun getAllTracks(): List<Track> {
         delay(1000)// Имитируем запрос к серверу
-        return listTracks.filter { it.trackName.lowercase().contains(expression.lowercase()) }
+        return listTracks
+    }*/
+
+    override fun getTrackByNameAndArtist(track: Track): Flow<Track?> {
+        return database.getTrackByNameAndArtist(track)
+    }
+
+    override suspend fun insertTrackToPlaylist(
+        track: Track,
+        playlistId: Long
+    ) {
+        database.insertTrack(track.copy(playlistId = playlistId))
+    }
+
+    override suspend fun deleteTrackFromPlaylist(track: Track) {
+        database.deleteTrackFromPlaylist(track.trackId)
+    }
+
+    override suspend fun updateTrackFavoriteStatus(
+        track: Track,
+        isFavorite: Boolean
+    ) {
+        database.insertTrack(track.copy(favorite = isFavorite))
+    }
+
+    override suspend fun getTrackById(trackId: Long): Track? {
+        return database.getTrackById(trackId)
+    }
+
+    override fun deleteTracksByPlaylistId(playlistId: Long) {
+        database.deleteTracksByPlaylistId(playlistId)
+    }
+
+    override fun getFavoriteTracks(): Flow<List<Track>> {
+        return database.getFavoriteTracks()
     }
 }
 
-val listTracks = listOf(
+/*val listTracks = listOf(
     Track(
         id = 1,
         trackName = "Владивосток 2000",
@@ -107,4 +147,4 @@ val listTracks = listOf(
         favorite = false,
         playlistId = 0
     )
-)
+)*/
