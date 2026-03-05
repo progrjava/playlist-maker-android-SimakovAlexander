@@ -21,7 +21,7 @@
 ### Логика открытия и закрытия BottomSheet
 
 - [ ] В родительском компоненте создан стейт:
-    - [ ] `var showBottomSheet by remember { mutableStateOf(false) }`
+- [ ] `var showBottomSheet by remember { mutableStateOf(false) }`
 - [ ] При открытии панели устанавливается `showBottomSheet = true`.
 - [ ] При закрытии панели вызывается `onDismissRequest`, который устанавливает `showBottomSheet = false`.
 - [ ] Панель скрывается при клике вне области `ModalBottomSheet`.

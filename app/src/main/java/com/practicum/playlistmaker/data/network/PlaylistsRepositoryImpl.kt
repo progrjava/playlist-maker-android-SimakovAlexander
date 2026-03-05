@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker.data.network
 
-import com.practicum.playlistmaker.data.local.DatabaseMock
 import com.practicum.playlistmaker.data.local.DatabaseProvider
 import com.practicum.playlistmaker.domain.PlaylistsRepository
 import com.practicum.playlistmaker.domain.model.Playlist

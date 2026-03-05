@@ -4,7 +4,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -36,7 +35,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.common.CustomTopBar
-import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.BluePrimary
 import com.practicum.playlistmaker.ui.theme.GrayBackground
