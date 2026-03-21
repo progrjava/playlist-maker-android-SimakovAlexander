@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.trackDetails
+package com.practicum.playlistmaker.ui.trackDetails.screen
 
 
 import androidx.compose.foundation.background
@@ -47,7 +47,7 @@ import com.practicum.playlistmaker.ui.trackDetails.components.PlaylistBottomShee
 import kotlinx.coroutines.launch
 
 @Composable
-fun TrackDetails(
+fun TrackDetailsScreen(
     track: Track,
     playlistsViewModel: PlaylistsViewModel,
     onBackClick: () -> Unit

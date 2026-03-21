@@ -1,8 +1,8 @@
-package com.practicum.playlistmaker.data.network
+package com.practicum.playlistmaker.data.repository
 
 import com.practicum.playlistmaker.data.local.DatabaseMock
+import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
 import com.practicum.playlistmaker.domain.model.Word
-import com.practicum.playlistmaker.domain.SearchHistoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

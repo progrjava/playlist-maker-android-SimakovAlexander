@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.common
+package com.practicum.playlistmaker.ui.settings.components
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween

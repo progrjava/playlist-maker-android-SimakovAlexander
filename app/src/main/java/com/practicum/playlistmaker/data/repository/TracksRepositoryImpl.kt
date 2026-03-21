@@ -1,12 +1,12 @@
-package com.practicum.playlistmaker.data.network
+package com.practicum.playlistmaker.data.repository
 
 import com.practicum.playlistmaker.data.local.DatabaseMock
 import com.practicum.playlistmaker.data.dto.TracksSearchRequest
 import com.practicum.playlistmaker.data.dto.TracksSearchResponse
-import com.practicum.playlistmaker.data.network.TrackDtoToTrackMapper.map
-import com.practicum.playlistmaker.domain.NetworkClient
+import com.practicum.playlistmaker.data.mapper.TrackMapper.map
+import com.practicum.playlistmaker.domain.api.NetworkClient
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.domain.TracksRepository
+import com.practicum.playlistmaker.domain.api.TracksRepository
 import kotlinx.coroutines.flow.Flow
 
 class TracksRepositoryImpl(

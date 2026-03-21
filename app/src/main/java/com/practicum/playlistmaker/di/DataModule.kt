@@ -2,14 +2,14 @@ package com.practicum.playlistmaker.di
 
 import com.practicum.playlistmaker.data.local.DatabaseMock
 import com.practicum.playlistmaker.data.network.ITunesApiService
-import com.practicum.playlistmaker.data.network.PlaylistsRepositoryImpl
 import com.practicum.playlistmaker.data.network.RetrofitNetworkClient
-import com.practicum.playlistmaker.data.network.SearchHistoryRepositoryImpl
-import com.practicum.playlistmaker.data.network.TracksRepositoryImpl
-import com.practicum.playlistmaker.domain.NetworkClient
-import com.practicum.playlistmaker.domain.PlaylistsRepository
-import com.practicum.playlistmaker.domain.SearchHistoryRepository
-import com.practicum.playlistmaker.domain.TracksRepository
+import com.practicum.playlistmaker.data.repository.PlaylistsRepositoryImpl
+import com.practicum.playlistmaker.data.repository.SearchHistoryRepositoryImpl
+import com.practicum.playlistmaker.data.repository.TracksRepositoryImpl
+import com.practicum.playlistmaker.domain.api.NetworkClient
+import com.practicum.playlistmaker.domain.api.PlaylistsRepository
+import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
+import com.practicum.playlistmaker.domain.api.TracksRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

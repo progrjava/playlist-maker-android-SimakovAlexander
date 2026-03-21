@@ -50,9 +50,6 @@ fun HistoryRequests(
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
-            /*if (historyList[index] != historyList.last()) {
-                HorizontalDivider(thickness = 0.5.dp)
-            }*/
         }
     }
 }

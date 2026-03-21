@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.settings
+package com.practicum.playlistmaker.ui.settings.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,30 +9,28 @@ import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.SupportAgent
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.settings.components.SettingsRowItem
 import com.practicum.playlistmaker.ui.settings.components.SettingsSwitchRowItem
+import com.practicum.playlistmaker.ui.settings.viewModel.SettingsViewModel
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.settings.helpers.contactSupport
-import com.practicum.playlistmaker.ui.settings.helpers.openUserAgreement
 import com.practicum.playlistmaker.ui.settings.helpers.rememberSettingsStrings
-import com.practicum.playlistmaker.ui.settings.helpers.shareApp
+import org.koin.androidx.compose.koinViewModel
 
-@Preview(device = "id:pixel_5", showSystemUi = true, name = "settings-preview")
 @Composable
-fun SettingsScreen(onBackClick: () -> Unit = {}) {
+fun SettingsScreen(
+    onBackClick: () -> Unit = {},
+    viewModel: SettingsViewModel = koinViewModel()
+) {
     val context = LocalContext.current
-    var isDarkTheme by remember { mutableStateOf(false) }
+    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
     val strings = rememberSettingsStrings()
 
     Scaffold(
@@ -53,37 +51,25 @@ fun SettingsScreen(onBackClick: () -> Unit = {}) {
             SettingsSwitchRowItem(
                 title = stringResource(R.string.dark_mode_switch),
                 isChecked = isDarkTheme,
-                onCheckedChange = { isDarkTheme = it }
+                onCheckedChange = { viewModel.onThemeChanged(it) }
             )
             SettingsRowItem(
                 title = stringResource(R.string.share_app),
                 trailingIcon = Icons.Filled.Share
             ) {
-                shareApp(
-                    context,
-                    strings.shareMessage,
-                    strings.shareVia
-                )
+                viewModel.shareApp(context, strings)
             }
             SettingsRowItem(
                 title = stringResource(R.string.write_to_support),
                 trailingIcon = Icons.Outlined.SupportAgent
             ) {
-                contactSupport(
-                    context,
-                    strings.supportEmail,
-                    strings.supportSubject,
-                    strings.supportBody
-                )
+                viewModel.contactSupport(context, strings)
             }
             SettingsRowItem(
                 title = stringResource(R.string.user_agreement),
                 trailingIcon = Icons.Outlined.ChevronRight
             ) {
-                openUserAgreement(
-                    context,
-                    strings.userAgreementLink
-                )
+                viewModel.openUserAgreement(context, strings)
             }
         }
     }

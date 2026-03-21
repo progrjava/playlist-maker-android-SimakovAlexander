@@ -2,7 +2,7 @@ package com.practicum.playlistmaker.data.network
 
 import com.practicum.playlistmaker.data.dto.BaseResponse
 import com.practicum.playlistmaker.data.dto.TracksSearchRequest
-import com.practicum.playlistmaker.domain.NetworkClient
+import com.practicum.playlistmaker.domain.api.NetworkClient
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -21,14 +21,11 @@ class RetrofitNetworkClient(private val api: ITunesApiService) : NetworkClient {
                 }
             }
         } catch (e: IOException) {
-            // Сетевые ошибки (нет интернета, таймаут)
-            throw e // Пробрасываем IOException, чтобы SearchViewModel мог его обработать
+            throw e
         } catch (e: HttpException) {
-            // HTTP ошибки (4xx, 5xx)
-            throw e // Пробрасываем HttpException, чтобы SearchViewModel мог его обработать
+            throw e
         } catch (e: Exception) {
-            // Любые другие неожиданные ошибки
-            throw e // Пробрасываем общий Exception
+            throw e
         }
     }
 }

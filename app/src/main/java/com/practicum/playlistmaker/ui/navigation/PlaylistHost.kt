@@ -18,17 +18,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.favorites.FavoritesScreen
-import com.practicum.playlistmaker.ui.main.MainScreen
+import com.practicum.playlistmaker.ui.main.screen.MainScreen
 import com.practicum.playlistmaker.ui.navigation.helpers.NavRoutes
-import com.practicum.playlistmaker.ui.playlist.PlaylistScreen
+import com.practicum.playlistmaker.ui.playlist.screen.PlaylistScreen
 import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistViewModel
-import com.practicum.playlistmaker.ui.playlists.NewPlaylistScreen
-import com.practicum.playlistmaker.ui.playlists.PlaylistsScreen
+import com.practicum.playlistmaker.ui.newPlaylist.NewPlaylistScreen
+import com.practicum.playlistmaker.ui.playlists.screen.PlaylistsScreen
 import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
-import com.practicum.playlistmaker.ui.search.SearchScreen
+import com.practicum.playlistmaker.ui.search.screen.SearchScreen
 import com.practicum.playlistmaker.ui.search.viewModel.SearchViewModel
-import com.practicum.playlistmaker.ui.settings.SettingsScreen
-import com.practicum.playlistmaker.ui.trackDetails.TrackDetails
+import com.practicum.playlistmaker.ui.settings.screen.SettingsScreen
+import com.practicum.playlistmaker.ui.trackDetails.screen.TrackDetailsScreen
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -104,7 +104,7 @@ fun PlaylistHost(navController: NavHostController) {
             }
 
             track?.let { currentTrack ->
-                TrackDetails(
+                TrackDetailsScreen(
                     track = currentTrack,
                     playlistsViewModel = playlistsViewModel,
                     onBackClick = { navController.popBackStack() }

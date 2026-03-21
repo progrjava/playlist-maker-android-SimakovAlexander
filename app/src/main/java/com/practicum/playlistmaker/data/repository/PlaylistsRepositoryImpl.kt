@@ -1,7 +1,7 @@
-package com.practicum.playlistmaker.data.network
+package com.practicum.playlistmaker.data.repository
 
 import com.practicum.playlistmaker.data.local.DatabaseMock
-import com.practicum.playlistmaker.domain.PlaylistsRepository
+import com.practicum.playlistmaker.domain.api.PlaylistsRepository
 import com.practicum.playlistmaker.domain.model.Playlist
 import kotlinx.coroutines.flow.Flow
 

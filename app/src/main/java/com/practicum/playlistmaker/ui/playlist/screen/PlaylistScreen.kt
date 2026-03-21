@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.playlist
+package com.practicum.playlistmaker.ui.playlist.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

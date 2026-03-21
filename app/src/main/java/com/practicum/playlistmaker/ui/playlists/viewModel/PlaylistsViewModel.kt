@@ -2,8 +2,8 @@ package com.practicum.playlistmaker.ui.playlists.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practicum.playlistmaker.domain.PlaylistsRepository
-import com.practicum.playlistmaker.domain.TracksRepository
+import com.practicum.playlistmaker.domain.api.PlaylistsRepository
+import com.practicum.playlistmaker.domain.api.TracksRepository
 import com.practicum.playlistmaker.domain.model.Playlist
 import com.practicum.playlistmaker.domain.model.Track
 import kotlinx.coroutines.Dispatchers

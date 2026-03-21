@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.domain
+package com.practicum.playlistmaker.domain.api
 
 import com.practicum.playlistmaker.data.dto.BaseResponse
 

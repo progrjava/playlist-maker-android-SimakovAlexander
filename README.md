@@ -4,6 +4,19 @@
 
 ---
 
+## Sprint 9
+
+### Что реализовано в Спринте 9:
+- **Сетевой поиск:** Реализовано выполнение настоящих поисковых запросов к iTunes API с использованием Retrofit.
+- **Обработка состояний поиска:** Добавлены плейсхолдеры для пустых результатов и ошибок сервера с возможностью повторного запроса.
+- **Экран плейлиста:** Реализован детальный экран плейлиста с отображением названия, описания и списка треков.
+- **Внедрение Koin (DI):** Проект полностью переведен на внедрение зависимостей через Koin (версия 4.0.0). Все ViewModel и репозитории теперь получают зависимости через конструктор.
+- **Масштабный рефакторинг:**
+  - Реорганизована структура слоев: `data` (network, repository, mapper), `domain` (api, model), `ui` (screen, viewModel).
+  - Улучшена архитектура MVVM: логика настроек (sharing, support) вынесена в `SettingsViewModel`.
+  - Оптимизированы Koin-модули с использованием современного DSL (`viewModelOf`).
+- **Навигация:** Обновлена навигация (Compose Navigation) для работы с новой структурой пакетов и параметризованными ViewModel.
+
 ## Sprint 8
 
 ### Что реализовано в Спринте 8:
@@ -86,6 +99,7 @@
 - [checklists/sprint-6.md](checklists/sprint-6.md)
 - [checklists/sprint-7.md](checklists/sprint-7.md)
 - [checklists/sprint-8.md](checklists/sprint-8.md)
+- [checklists/sprint-9.md](checklists/sprint-9.md)
 
 ---
 
@@ -93,6 +107,9 @@
 - Android Studio
 - Kotlin
 - Jetpack Compose
+- Koin
+- Retrofit 2
+- Flow / Coroutines
 - Git/GitHub
 
 ---
@@ -104,3 +121,4 @@
 - **v6.0** — Спринт 6: Экран поиска, список треков, ViewModel, SearchState
 - **v7.0** — Спринт 7: FloatingActionButton + ModalBottomSheet
 - **v8.0** — Спринт 8: История поиска, экран TrackDetails, избранное и плейлисты
+- **v9.0** — Спринт 9: Сетевой поиск, экран плейлиста, Koin DI и глобальный рефакторинг

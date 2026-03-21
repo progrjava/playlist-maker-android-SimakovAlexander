@@ -2,7 +2,7 @@ package com.practicum.playlistmaker.ui.playlist.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practicum.playlistmaker.domain.PlaylistsRepository
+import com.practicum.playlistmaker.domain.api.PlaylistsRepository
 import com.practicum.playlistmaker.domain.model.Playlist
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

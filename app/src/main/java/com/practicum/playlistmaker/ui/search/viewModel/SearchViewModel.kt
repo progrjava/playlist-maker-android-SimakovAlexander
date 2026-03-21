@@ -2,8 +2,8 @@ package com.practicum.playlistmaker.ui.search.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practicum.playlistmaker.domain.SearchHistoryRepository
-import com.practicum.playlistmaker.domain.TracksRepository
+import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
+import com.practicum.playlistmaker.domain.api.TracksRepository
 import com.practicum.playlistmaker.domain.model.Track
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
