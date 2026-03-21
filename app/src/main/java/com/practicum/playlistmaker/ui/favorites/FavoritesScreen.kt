@@ -22,7 +22,7 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.common.TrackListItem
-import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistsViewModel
+import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.search.components.CenteredColumn
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.TextPrimary

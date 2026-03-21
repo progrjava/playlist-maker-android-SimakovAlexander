@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.playlist
+package com.practicum.playlistmaker.ui.playlists
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.common.CustomTopBar
-import com.practicum.playlistmaker.ui.playlist.components.AddFloatingButton
-import com.practicum.playlistmaker.ui.playlist.components.PlaylistListItem
-import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistsViewModel
+import com.practicum.playlistmaker.ui.playlists.components.AddFloatingButton
+import com.practicum.playlistmaker.ui.playlists.components.PlaylistListItem
+import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 
 @Composable
@@ -44,7 +44,7 @@ fun PlaylistsScreen(
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(playlists.size) { index ->
                     PlaylistListItem(playlist = playlists[index]) {
-                        navigateToPlaylist(index.toLong())
+                        navigateToPlaylist(playlists[index].id)
                     }
                 }
             }

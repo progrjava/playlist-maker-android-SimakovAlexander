@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Playlist
-import com.practicum.playlistmaker.ui.playlist.components.PlaylistListItem
+import com.practicum.playlistmaker.ui.playlists.components.PlaylistListItem
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.TextPrimary
 

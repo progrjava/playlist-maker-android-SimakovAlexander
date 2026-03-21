@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.playlist
+package com.practicum.playlistmaker.ui.playlists
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState

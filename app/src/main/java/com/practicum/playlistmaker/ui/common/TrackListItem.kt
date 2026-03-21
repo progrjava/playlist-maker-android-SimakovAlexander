@@ -1,6 +1,6 @@
 package com.practicum.playlistmaker.ui.common
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.outlined.ChevronRight
@@ -19,8 +20,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.theme.IconHint
@@ -28,6 +32,7 @@ import com.practicum.playlistmaker.ui.theme.IconSecondary
 import com.practicum.playlistmaker.ui.theme.TextHint
 import com.practicum.playlistmaker.ui.theme.TextPrimary
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TrackListItem(
     track: Track,
@@ -45,10 +50,15 @@ fun TrackListItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_music),
-            modifier = Modifier.size(45.dp),
-            contentDescription = "Трек ${track.trackName}"
+        AsyncImage(
+            model = track.image,
+            placeholder = painterResource(id = R.drawable.ic_music),
+            error = painterResource(id = R.drawable.ic_music),
+            contentDescription = "Трек ${track.trackName}",
+            modifier = Modifier
+                .size(45.dp)
+                .clip(RoundedCornerShape(2.dp)),
+            contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.width(8.dp))
         Column(

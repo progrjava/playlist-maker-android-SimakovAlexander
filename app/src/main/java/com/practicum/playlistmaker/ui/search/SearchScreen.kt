@@ -131,20 +131,30 @@ fun SearchScreen(
                     FoundTracksView(
                         (screenState as SearchState.Success.WithTracks).tracks,
                         onClick = { track ->
+                            searchViewModel.onTrackClicked(track)
                             onTrackClick(track)
                         }
                     )
                 }
             }
 
-            when (screenState) {
+            when (val state = screenState) {
                 is SearchState.Initial -> InitialStateView()
                 is SearchState.Searching -> SearchingView()
                 is SearchState.Success.NothingFound -> NothingFoundView()
-                is SearchState.Fail -> FailView((screenState as SearchState.Fail).error)
+                is SearchState.Fail -> {
+                    val errorMessage = when (state) {
+                        is SearchState.Fail.NetworkError -> state.message
+                        is SearchState.Fail.ApiError -> state.message
+                        is SearchState.Fail.UnknownError -> state.message
+                    }
+                    FailView(
+                        error = errorMessage,
+                        onRefresh = { searchViewModel.retrySearch() }
+                    )
+                }
                 else -> Unit
             }
         }
     }
 }
-

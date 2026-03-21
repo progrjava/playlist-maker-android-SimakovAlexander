@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.TravelExplore
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,12 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CircularProgressIndicator
 import com.practicum.playlistmaker.ui.common.TrackListItem
 import com.practicum.playlistmaker.ui.theme.BluePrimary
+import com.practicum.playlistmaker.ui.theme.TextOnPrimary
 import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
@@ -92,7 +97,7 @@ fun FoundTracksView(tracks: List<Track>, onClick: (Track) -> Unit) {
 }
 
 @Composable
-fun FailView(error: String) {
+fun FailView(error: String, onRefresh: () -> Unit) {
     CenteredColumn {
         Image(
             painter = painterResource(R.drawable.searching_error),
@@ -101,16 +106,32 @@ fun FailView(error: String) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            stringResource(R.string.search_error),
+            text = stringResource(R.string.search_error),
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimary
+            color = TextPrimary,
+            textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
-            error,
-            style = MaterialTheme.typography.titleMedium,
-            color = TextPrimary
+            text = error,
+            style = MaterialTheme.typography.bodyMedium,
+            color = TextPrimary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 24.dp)
         )
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(
+            onClick = onRefresh,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = BluePrimary,
+                contentColor = TextOnPrimary
+            )
+        ) {
+            Text(
+                text = stringResource(R.string.search_refresh),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        }
     }
 }
 

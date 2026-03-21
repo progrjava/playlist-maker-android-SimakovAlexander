@@ -1,11 +1,7 @@
-package com.practicum.playlistmaker.ui.playlist.viewModel
+package com.practicum.playlistmaker.ui.playlists.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practicum.playlistmaker.data.local.DatabaseMock
-import com.practicum.playlistmaker.data.local.DatabaseProvider
-import com.practicum.playlistmaker.data.network.PlaylistsRepositoryImpl
-import com.practicum.playlistmaker.data.network.TracksRepositoryImpl
 import com.practicum.playlistmaker.domain.PlaylistsRepository
 import com.practicum.playlistmaker.domain.TracksRepository
 import com.practicum.playlistmaker.domain.model.Playlist
@@ -16,10 +12,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
-class PlaylistsViewModel(): ViewModel() {
-    private val playlistsRepository: PlaylistsRepository = PlaylistsRepositoryImpl(scope = viewModelScope)
-    private val tracksRepository: TracksRepository = TracksRepositoryImpl(scope = viewModelScope)
-    // Используем мок базы вместо репозитория
+class PlaylistsViewModel(
+    val playlistsRepository: PlaylistsRepository,
+    private val tracksRepository: TracksRepository
+) : ViewModel() {
 
     val playlists: Flow<List<Playlist>> = flow {
         val collectedPlaylists = mutableListOf<Playlist>()
@@ -29,8 +25,7 @@ class PlaylistsViewModel(): ViewModel() {
         }
     }
 
-    val favoriteList: Flow<List<Track>> =
-        DatabaseProvider.getDatabase(viewModelScope).getFavoriteTracks()
+    val favoriteList: Flow<List<Track>> = tracksRepository.getFavoriteTracks()
 
     fun createNewPlaylist(namePlaylist: String, descriptionPlaylist: String) {
         viewModelScope.launch(Dispatchers.IO) {

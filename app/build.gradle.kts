@@ -6,9 +6,7 @@ plugins {
 
 android {
     namespace = "com.practicum.playlistmaker"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.practicum.playlistmaker"
@@ -76,4 +74,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.koin.android)
+      implementation(libs.koin.androidx.compose)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.peko)
+    implementation(libs.coil.compose)
 }

@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker.ui.trackDetails
 
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LibraryAdd
@@ -29,14 +29,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CustomTopBar
-import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistsViewModel
+import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.IconSecondary
 import com.practicum.playlistmaker.ui.theme.TextHint
@@ -74,11 +76,14 @@ fun TrackDetails(
                 )
                 .padding(horizontal = 16.dp)
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                painter = painterResource(id = R.drawable.ic_playlist),
+                    .padding(horizontal = 8.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                model = currentTrack.image,
+                placeholder = painterResource(id = R.drawable.ic_playlist),
+                error = painterResource(id = R.drawable.ic_playlist),
                 contentDescription = "Обложка трека ${currentTrack.trackName}",
             )
             Text(

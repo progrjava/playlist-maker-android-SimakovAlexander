@@ -34,7 +34,7 @@ val YandexSansTypography = Typography(
     displaySmall = TextStyle(
         fontFamily = YandexSansFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 36.sp,
+        fontSize = 18.sp,
     ),
     headlineLarge = TextStyle(
         fontFamily = YandexSansFontFamily,
@@ -48,7 +48,7 @@ val YandexSansTypography = Typography(
     ),
     headlineSmall = TextStyle(
         fontFamily = YandexSansFontFamily,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
     ),
     titleLarge = TextStyle(

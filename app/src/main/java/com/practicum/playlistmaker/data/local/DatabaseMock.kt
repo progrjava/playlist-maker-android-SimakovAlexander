@@ -28,8 +28,7 @@ class DatabaseMock(val scope: CoroutineScope) {
     private val historyList = mutableListOf<Word>()
     private val _historyUpdates = MutableSharedFlow<Unit>()
     private val playlists = mutableListOf<Playlist>()
-    /*private val tracks = mutableListOf<Track>()*/
-    private val tracks = listTracks.toMutableList()
+    private val tracks = mutableListOf<Track>()
 
     fun getHistoryRequests(): Flow<List<Word>> = _historyUpdates
         .onStart { emit(Unit) }
@@ -67,7 +66,11 @@ class DatabaseMock(val scope: CoroutineScope) {
     }
 
     fun getPlayList(id: Long): Flow<Playlist?> = flow {
-        emit(playlists.find { it.id == id })
+        val playlist = playlists.find { it.id == id } ?: return@flow emit(null)
+
+        val actualTracks = tracks.filter { it.playlistId == id }
+
+        emit(playlist.copy(tracks = actualTracks))
     }
 
     fun addNewPlaylist(name: String, description: String) {
@@ -117,95 +120,3 @@ class DatabaseMock(val scope: CoroutineScope) {
     }
 }
 
-val listTracks = listOf(
-    Track(
-        trackId = 1,
-        trackName = "Владивосток 2000",
-        artistName = "Мумий Троль",
-        trackTime = "2:38",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 2,
-        trackName = "Группа крови",
-        artistName = "Кино",
-        trackTime = "4:43",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 3,
-        trackName = "Не смотри назад",
-        artistName = "Ария",
-        trackTime = "5:12",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 4,
-        trackName = "Звезда по имени Солнце",
-        artistName = "Кино",
-        trackTime = "3:45",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 5,
-        trackName = "Лондон",
-        artistName = "Аквариум",
-        trackTime = "4:32",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 6,
-        trackName = "На заре",
-        artistName = "Альянс",
-        trackTime = "3:50",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 7,
-        trackName = "Перемен",
-        artistName = "Кино",
-        trackTime = "4:56",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 8,
-        trackName = "Розовый фламинго",
-        artistName = "Сплин",
-        trackTime = "3:15",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 9,
-        trackName = "Танцевать",
-        artistName = "Мельница",
-        trackTime = "3:42",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    ),
-    Track(
-        trackId = 10,
-        trackName = "Чёрный бумер",
-        artistName = "Серега",
-        trackTime = "4:01",
-        image = "",
-        favorite = false,
-        playlistId = 0
-    )
-)

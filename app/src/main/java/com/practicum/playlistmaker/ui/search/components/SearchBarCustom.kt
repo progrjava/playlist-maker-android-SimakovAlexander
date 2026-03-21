@@ -41,14 +41,6 @@ fun SearchBarCustom(
     onClearSearch: () -> Unit
 ) {
     Row(
-        /*modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .height(36.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(color = BackgroundSecondary)
-            .padding(horizontal = 12.dp),
-        verticalAlignment = Alignment.CenterVertically*/
         modifier = Modifier
             .fillMaxWidth()
             .height(36.dp),

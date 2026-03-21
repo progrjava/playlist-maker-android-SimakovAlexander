@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,18 +20,22 @@ import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.favorites.FavoritesScreen
 import com.practicum.playlistmaker.ui.main.MainScreen
 import com.practicum.playlistmaker.ui.navigation.helpers.NavRoutes
-import com.practicum.playlistmaker.ui.playlist.NewPlaylistScreen
-import com.practicum.playlistmaker.ui.playlist.PlaylistsScreen
-import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistsViewModel
+import com.practicum.playlistmaker.ui.playlist.PlaylistScreen
+import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistViewModel
+import com.practicum.playlistmaker.ui.playlists.NewPlaylistScreen
+import com.practicum.playlistmaker.ui.playlists.PlaylistsScreen
+import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.search.SearchScreen
 import com.practicum.playlistmaker.ui.search.viewModel.SearchViewModel
 import com.practicum.playlistmaker.ui.settings.SettingsScreen
 import com.practicum.playlistmaker.ui.trackDetails.TrackDetails
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun PlaylistHost(navController: NavHostController) {
-    val searchViewModel: SearchViewModel = viewModel()
-    val playlistsViewModel: PlaylistsViewModel = viewModel()
+    val searchViewModel: SearchViewModel = koinViewModel()
+    val playlistsViewModel: PlaylistsViewModel = koinViewModel()
 
     NavHost(
         navController = navController,
@@ -122,9 +125,27 @@ fun PlaylistHost(navController: NavHostController) {
                     navController.navigate(Screen.NEW_PLAYLIST.route)
                 },
                 navigateToPlaylist = { playlistId ->
-                    // позже
+                    navController.navigate(NavRoutes.playlistDetails(playlistId))
                 },
                 onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = NavRoutes.PLAYLIST_DETAILS,
+            arguments = listOf(navArgument("playlistId") { type = NavType.LongType })
+        ) { backStackEntry ->
+
+            val playlistId = backStackEntry.arguments?.getLong("playlistId") ?: return@composable
+
+            val playlistViewModel: PlaylistViewModel = koinViewModel { parametersOf(playlistId) }
+
+            PlaylistScreen(
+                playlistViewModel = playlistViewModel,
+                onBackClick = { navController.popBackStack() },
+                onTrackClick = { track ->
+                    navController.navigate(NavRoutes.trackDetails(track.trackId))
+                }
             )
         }
 
