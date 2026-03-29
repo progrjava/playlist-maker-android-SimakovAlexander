@@ -16,7 +16,7 @@ class SettingsViewModel : ViewModel() {
 
     fun onThemeChanged(isDark: Boolean) {
         _isDarkTheme.value = isDark
-        // Сохранение темы в SharedPreferences
+        //  SharedPreferences
     }
 
     fun shareApp(context: Context, strings: SettingsStrings) {

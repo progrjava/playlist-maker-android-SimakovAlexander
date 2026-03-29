@@ -16,7 +16,6 @@ object TrackMapper {
             trackTime = trackTime,
             image = imageUrl,
             favorite = false,
-            playlistId = 0L
         )
     }
 }

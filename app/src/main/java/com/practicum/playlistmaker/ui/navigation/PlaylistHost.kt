@@ -6,23 +6,18 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.favorites.FavoritesScreen
 import com.practicum.playlistmaker.ui.main.screen.MainScreen
 import com.practicum.playlistmaker.ui.navigation.helpers.NavRoutes
+import com.practicum.playlistmaker.ui.newPlaylist.screen.NewPlaylistScreen
+import com.practicum.playlistmaker.ui.newPlaylist.viewModel.NewPlaylistViewModel
 import com.practicum.playlistmaker.ui.playlist.screen.PlaylistScreen
 import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistViewModel
-import com.practicum.playlistmaker.ui.newPlaylist.NewPlaylistScreen
 import com.practicum.playlistmaker.ui.playlists.screen.PlaylistsScreen
 import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.search.screen.SearchScreen
@@ -93,23 +88,16 @@ fun PlaylistHost(navController: NavHostController) {
         }
 
         composable(
-            NavRoutes.TRACK_DETAILS,
+            Screen.TRACK_DETAILS.route,
             arguments = listOf(navArgument("trackId") {type = NavType.LongType})
         ) { backStackEntry ->
             val trackId = backStackEntry.arguments?.getLong("trackId") ?: return@composable
-            var track by remember { mutableStateOf<Track?>(null) }
 
-            LaunchedEffect(trackId) {
-                track = playlistsViewModel.getTrackById(trackId)
-            }
-
-            track?.let { currentTrack ->
-                TrackDetailsScreen(
-                    track = currentTrack,
-                    playlistsViewModel = playlistsViewModel,
-                    onBackClick = { navController.popBackStack() }
-                )
-            }
+            TrackDetailsScreen(
+                trackId = trackId,
+                playlistsViewModel = playlistsViewModel,
+                onBackClick = { navController.popBackStack() }
+            )
         }
 
         composable(Screen.SETTINGS.route) {
@@ -132,12 +120,10 @@ fun PlaylistHost(navController: NavHostController) {
         }
 
         composable(
-            route = NavRoutes.PLAYLIST_DETAILS,
+            route = Screen.PLAYLIST_DETAILS.route,
             arguments = listOf(navArgument("playlistId") { type = NavType.LongType })
         ) { backStackEntry ->
-
             val playlistId = backStackEntry.arguments?.getLong("playlistId") ?: return@composable
-
             val playlistViewModel: PlaylistViewModel = koinViewModel { parametersOf(playlistId) }
 
             PlaylistScreen(
@@ -145,16 +131,33 @@ fun PlaylistHost(navController: NavHostController) {
                 onBackClick = { navController.popBackStack() },
                 onTrackClick = { track ->
                     navController.navigate(NavRoutes.trackDetails(track.trackId))
+                },
+                onEditPlaylist = { id ->
+                    navController.navigate(NavRoutes.editPlaylist(id))
                 }
             )
         }
 
         composable(Screen.NEW_PLAYLIST.route) {
+            val newViewModel: NewPlaylistViewModel = koinViewModel { parametersOf(null) }
+
             NewPlaylistScreen(
-                onCreate = { namePlaylist, descriptionPlaylist ->
-                    playlistsViewModel.createNewPlaylist(namePlaylist, descriptionPlaylist)
-                    navController.popBackStack()
-                },
+                playlistId = null,
+                viewModel = newViewModel,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = Screen.EDIT_PLAYLIST.route,
+            arguments = listOf(navArgument("playlistId") { type = NavType.LongType })
+        ) { backStackEntry ->
+            val playlistId = backStackEntry.arguments?.getLong("playlistId") ?: return@composable
+            val editViewModel: NewPlaylistViewModel = koinViewModel { parametersOf(playlistId) }
+
+            NewPlaylistScreen(
+                playlistId = playlistId,
+                viewModel = editViewModel,
                 onBackClick = { navController.popBackStack() }
             )
         }

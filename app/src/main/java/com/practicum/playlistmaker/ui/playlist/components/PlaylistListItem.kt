@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.playlists.components
+package com.practicum.playlistmaker.ui.playlist.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +26,7 @@ import com.practicum.playlistmaker.ui.theme.TextPrimary
 @Composable
 fun PlaylistListItem(
     playlist: Playlist,
+    tracksCount: Int,
     onClick: () -> Unit
 ) {
     Row(
@@ -50,12 +52,24 @@ fun PlaylistListItem(
                 style = MaterialTheme.typography.bodyLarge,
                 color = TextPrimary
             )
-            val text = "${playlist.tracks.size} треков"
+            Spacer(modifier = Modifier.height(4.dp))
+            val text = "$tracksCount " + tracksCount.pluralize("трек", "трека", "треков")
             Text(
                 text,
                 style = MaterialTheme.typography.bodySmall,
                 color = TextHint
             )
         }
+    }
+}
+
+private fun Int.pluralize(one: String, few: String, many: String): String {
+    val lastDigit = this % 10
+    val lastTwo = this % 100
+    return when {
+        lastTwo in 11..19 -> many
+        lastDigit == 1 -> one
+        lastDigit in 2..4 -> few
+        else -> many
     }
 }

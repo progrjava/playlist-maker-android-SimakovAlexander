@@ -1,6 +1,8 @@
 package com.practicum.playlistmaker.data.repository
 
-import com.practicum.playlistmaker.data.local.DatabaseMock
+import com.practicum.playlistmaker.data.database.AppDatabase
+import com.practicum.playlistmaker.data.database.converter.toEntity
+import com.practicum.playlistmaker.data.database.converter.toTrack
 import com.practicum.playlistmaker.data.dto.TracksSearchRequest
 import com.practicum.playlistmaker.data.dto.TracksSearchResponse
 import com.practicum.playlistmaker.data.mapper.TrackMapper.map
@@ -8,11 +10,14 @@ import com.practicum.playlistmaker.domain.api.NetworkClient
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.domain.api.TracksRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TracksRepositoryImpl(
-    private val database: DatabaseMock,
+    database: AppDatabase,
     private val networkClient: NetworkClient
 ) : TracksRepository {
+
+    private val dao = database.TracksDao()
 
     override suspend fun searchTracks(expression: String): List<Track> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
@@ -24,41 +29,24 @@ class TracksRepositoryImpl(
         }
     }
 
-    override fun getTrackByNameAndArtist(track: Track): Flow<Track?> {
-        return database.getTrackByNameAndArtist(track)
-    }
-
-    override suspend fun insertTrackToPlaylist(
-        track: Track,
-        playlistId: Long
-    ) {
-        database.insertTrack(track.copy(playlistId = playlistId))
-    }
-
-    override suspend fun deleteTrackFromPlaylist(track: Track) {
-        database.deleteTrackFromPlaylist(track.trackId)
+    override fun getFavoriteTracks(): Flow<List<Track>> {
+        return dao.getFavoriteTracks().map { tracks ->
+            tracks.map { it.toTrack() }
+        }
     }
 
     override suspend fun updateTrackFavoriteStatus(
         track: Track,
         isFavorite: Boolean
     ) {
-        database.insertTrack(track.copy(favorite = isFavorite))
+        dao.updateTrackFavoriteStatus(track.trackId, isFavorite)
     }
 
-    override suspend fun getTrackById(trackId: Long): Track? {
-        return database.getTrackById(trackId)
-    }
-
-    override fun deleteTracksByPlaylistId(playlistId: Long) {
-        database.deleteTracksByPlaylistId(playlistId)
-    }
-
-    override fun getFavoriteTracks(): Flow<List<Track>> {
-        return database.getFavoriteTracks()
+    override fun getTrackById(trackId: Long): Flow<Track?> {
+        return dao.getTrackById(trackId).map { it?.toTrack() }
     }
 
     override suspend fun insertTrack(track: Track) {
-        database.insertTrack(track)
+        dao.insertTrack(track.toEntity())
     }
 }

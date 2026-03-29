@@ -3,7 +3,7 @@ package com.practicum.playlistmaker.domain.api
 import kotlinx.coroutines.flow.Flow
 
 interface SearchHistoryRepository {
-    suspend fun getHistoryRequests(): Flow<List<String>>
+    suspend fun addToHistory(word: String)
 
-    fun addToHistory(word: String)
+    fun getHistoryRequests(): Flow<List<String>>
 }

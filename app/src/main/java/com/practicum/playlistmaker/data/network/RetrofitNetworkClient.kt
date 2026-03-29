@@ -20,12 +20,12 @@ class RetrofitNetworkClient(private val api: ITunesApiService) : NetworkClient {
                     errorMessage = "Invalid request type: expected TracksSearchRequest"
                 }
             }
-        } catch (e: IOException) {
-            throw e
+        } catch (_: IOException) {
+            BaseResponse().apply { resultCode = -1 }
         } catch (e: HttpException) {
-            throw e
-        } catch (e: Exception) {
-            throw e
+            BaseResponse().apply { resultCode = e.code() }
+        } catch (_: Exception) {
+            BaseResponse().apply { resultCode = 500 }
         }
     }
 }

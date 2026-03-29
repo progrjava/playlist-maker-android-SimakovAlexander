@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui.newPlaylist
+package com.practicum.playlistmaker.ui.newPlaylist.screen
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -25,6 +25,9 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -35,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.common.CustomTopBar
+import com.practicum.playlistmaker.ui.newPlaylist.viewModel.NewPlaylistViewModel
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.BluePrimary
 import com.practicum.playlistmaker.ui.theme.GrayBackground
@@ -43,11 +47,38 @@ import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun NewPlaylistScreen(
-    onCreate: (namePlaylist: String, descriptionPlaylist: String) -> Unit,
+    playlistId: Long? = null,
+    viewModel: NewPlaylistViewModel,
     onBackClick: () -> Unit
 ) {
+    val isEditMode = playlistId != null
+
+    val nameState by viewModel.name.collectAsState()
+    val descriptionState by viewModel.description.collectAsState()
+
+    val screenTitle = if (isEditMode)
+        stringResource(R.string.edit_playlist_title)
+    else
+        stringResource(R.string.new_playlist_title)
+
+    val buttonText = if (isEditMode)
+        stringResource(R.string.save_playlist)
+    else
+        stringResource(R.string.new_playlist_create)
+
     val name = rememberTextFieldState()
     val description = rememberTextFieldState()
+
+    LaunchedEffect(nameState, descriptionState) {
+        if (isEditMode) {
+            name.edit {
+                if (toString() != nameState) replace(0, length, nameState)
+            }
+            description.edit {
+                if (toString() != descriptionState) replace(0, length, descriptionState)
+            }
+        }
+    }
 
     val isNameFilled = name.text.toString().isNotBlank()
     val isDescriptionFilled = description.text.toString().isNotBlank()
@@ -65,7 +96,7 @@ fun NewPlaylistScreen(
     Scaffold(
         topBar = {
             CustomTopBar(
-                text = stringResource(R.string.new_playlist_title),
+                text = screenTitle,
                 onBackClick = onBackClick,
                 showBackButton = true
             )
@@ -97,7 +128,9 @@ fun NewPlaylistScreen(
                 )
                 OutlinedTextField(
                     state = name,
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
                     enabled = true,
                     readOnly = false,
                     textStyle = MaterialTheme.typography.bodyLarge,
@@ -128,7 +161,9 @@ fun NewPlaylistScreen(
                 )
                 OutlinedTextField(
                     state = description,
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
                     enabled = true,
                     readOnly = false,
                     textStyle = MaterialTheme.typography.bodyLarge,
@@ -160,7 +195,10 @@ fun NewPlaylistScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = {
-                        onCreate(name.text.toString(), description.text.toString())
+                        viewModel.onNameChanged(name.text.toString())
+                        viewModel.onDescriptionChanged(description.text.toString())
+                        viewModel.onSaveClick()
+                        onBackClick()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -182,30 +220,10 @@ fun NewPlaylistScreen(
                     )
                 ) {
                     Text(
-                        stringResource(R.string.new_playlist_create),
+                        text = buttonText,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
             }
     }
 }
-
-/*@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun NewPlaylistScreenPreview() {
-
-    MaterialTheme {
-        NewPlaylistScreen(
-            playlistsViewModel = object : PlaylistsViewModel() {
-                override fun createNewPlaylist(namePlaylist: String, descriptionPlaylist: String) {
-                    // ничего не делаем для preview
-                }
-            },
-            onCreate = {},
-            onBackClick = {}
-        )
-    }
-}*/

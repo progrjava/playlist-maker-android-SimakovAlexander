@@ -15,6 +15,8 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,7 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Playlist
-import com.practicum.playlistmaker.ui.playlists.components.PlaylistListItem
+import com.practicum.playlistmaker.ui.playlist.components.PlaylistListItem
+import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.TextPrimary
 
@@ -32,6 +35,7 @@ import com.practicum.playlistmaker.ui.theme.TextPrimary
 fun PlaylistBottomSheet(
     playlists: List<Playlist>,
     isShowPanel: Boolean,
+    playlistsViewModel: PlaylistsViewModel,
     onDismissRequest: () -> Unit,
     onPlaylistClick: (Playlist) -> Unit
 ) {
@@ -77,7 +81,11 @@ fun PlaylistBottomSheet(
                         .fillMaxSize()
                         .height(300.dp)) {
                         items(playlists.size) { index ->
-                            PlaylistListItem(playlist = playlists[index]) {
+                            val trackCount by playlistsViewModel.getTracksCountForPlaylist(playlists[index].id).collectAsState(0)
+                            PlaylistListItem(
+                                playlist = playlists[index],
+                                tracksCount = trackCount
+                            ) {
                                 onPlaylistClick(playlists[index])
                             }
                         }
