@@ -27,8 +27,6 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Playlist
 import com.practicum.playlistmaker.ui.playlist.components.PlaylistListItem
 import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,8 +43,8 @@ fun PlaylistBottomSheet(
         ModalBottomSheet(
             onDismissRequest = onDismissRequest,
             sheetState = sheetState,
-            containerColor = BackgroundPrimary,
-            contentColor = TextPrimary
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
         ) {
             Column(
                 modifier = Modifier
@@ -59,7 +57,7 @@ fun PlaylistBottomSheet(
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
-                    color = TextPrimary
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -74,7 +72,7 @@ fun PlaylistBottomSheet(
                     Text(
                         stringResource(R.string.playlists_not_found),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = TextPrimary
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 } else {
                     LazyColumn(modifier = Modifier
@@ -84,10 +82,9 @@ fun PlaylistBottomSheet(
                             val trackCount by playlistsViewModel.getTracksCountForPlaylist(playlists[index].id).collectAsState(0)
                             PlaylistListItem(
                                 playlist = playlists[index],
-                                tracksCount = trackCount
-                            ) {
-                                onPlaylistClick(playlists[index])
-                            }
+                                tracksCount = trackCount,
+                                onClick = { onPlaylistClick(playlists[index]) }
+                            )
                         }
                     }
                 }

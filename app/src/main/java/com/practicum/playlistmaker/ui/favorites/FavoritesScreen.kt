@@ -32,8 +32,6 @@ import com.practicum.playlistmaker.ui.common.DeleteAlertDialog
 import com.practicum.playlistmaker.ui.common.TrackListItem
 import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.search.components.CenteredColumn
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +54,7 @@ fun FavoritesScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -74,7 +72,7 @@ fun FavoritesScreen(
                     Text(
                         stringResource(R.string.favorites_not_found),
                         style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimary
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
             } else {

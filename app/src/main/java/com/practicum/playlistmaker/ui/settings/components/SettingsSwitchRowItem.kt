@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun SettingsSwitchRowItem(
@@ -28,7 +27,7 @@ fun SettingsSwitchRowItem(
         Text(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
-            color = TextPrimary,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.weight(1f)
         )
         CustomSwitch(

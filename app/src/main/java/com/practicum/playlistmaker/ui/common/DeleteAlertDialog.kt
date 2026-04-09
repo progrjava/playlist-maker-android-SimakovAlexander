@@ -9,9 +9,7 @@ import androidx.compose.ui.res.stringResource
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Playlist
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.theme.BluePrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun DeleteAlertDialog(
@@ -44,15 +42,15 @@ fun DeleteAlertDialog(
                 Text(
                     stringResource(R.string.no),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = BluePrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
         text = { Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            color = TextPrimary
+            color = MaterialTheme.colorScheme.onBackground
         )},
-        containerColor = BackgroundPrimary,
+        containerColor = MaterialTheme.colorScheme.background,
     )
 }

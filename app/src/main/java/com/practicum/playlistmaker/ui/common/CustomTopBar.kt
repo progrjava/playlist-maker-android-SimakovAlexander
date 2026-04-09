@@ -25,16 +25,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun CustomTopBar(
     showBackButton: Boolean = false,
     onBackClick: () -> Unit = {},
     text: String = "",
-    barColor: Color = BackgroundPrimary,
-    contentColor: Color = TextPrimary
+    barColor: Color = MaterialTheme.colorScheme.background,
+    contentColor: Color = MaterialTheme.colorScheme.onBackground
 ) {
     val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 

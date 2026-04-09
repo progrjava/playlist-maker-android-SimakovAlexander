@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker.ui.newPlaylist.viewModel
 
-import android.net.Uri
+import android.content.Context
+import android.os.Environment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.practicum.playlistmaker.domain.api.PlaylistsRepository
@@ -10,6 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import java.io.File
+import java.io.FileOutputStream
 
 class NewPlaylistViewModel(
     private val playlistsRepository: PlaylistsRepository,
@@ -22,8 +25,8 @@ class NewPlaylistViewModel(
     private val _description = MutableStateFlow("")
     val description: StateFlow<String> = _description.asStateFlow()
 
-    private val _imageUri = MutableStateFlow<Uri?>(null)
-    val imageUri: StateFlow<Uri?> = _imageUri.asStateFlow()
+    private val _imageUri = MutableStateFlow<String?>(null)
+    val imageUri: StateFlow<String?> = _imageUri.asStateFlow()
 
     private var originalPlaylist: Playlist? = null
 
@@ -35,7 +38,7 @@ class NewPlaylistViewModel(
                         originalPlaylist = playlist
                         _name.value = playlist.name
                         _description.value = playlist.description ?: ""
-                        _imageUri.value = playlist.image?.toUri()
+                        _imageUri.value = playlist.image
                     }
                 }
             }
@@ -44,19 +47,54 @@ class NewPlaylistViewModel(
 
     fun onNameChanged(newName: String) { _name.value = newName }
     fun onDescriptionChanged(newDescription: String) { _description.value = newDescription }
-    fun onImageChanged(newUri: Uri?) { _imageUri.value = newUri }
+    fun onImageChanged(newUri: String?) { _imageUri.value = newUri }
 
-    fun onSaveClick() {
+    private fun saveImageToInternalStorage(context: Context, uriString: String?): String? {
+        if (uriString == null) return null
+        val uri = uriString.toUri()
+
+        if (uri.scheme != "content") return uriString
+
+        val inputStream = context.contentResolver.openInputStream(uri)
+
+        val filePath = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "playlist_covers")
+        if (!filePath.exists()) filePath.mkdirs()
+
+        val file = File(filePath, "cover_${System.currentTimeMillis()}.jpg")
+
+        inputStream?.use { input ->
+            FileOutputStream(file).use { output ->
+                input.copyTo(output)
+            }
+        }
+        return file.absolutePath
+    }
+
+    private fun deleteImageFile(path: String) {
+        try {
+            val file = File(path)
+            if (file.exists()) {
+                file.delete()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun onSaveClick(context: Context) {
         viewModelScope.launch {
             val currentName = _name.value
             val currentDescription = _description.value
-            val currentImagePath = _imageUri.value?.toString()
+            val currentUri = _imageUri.value
+
+            val oldImagePath = originalPlaylist?.image
+            val finalImagePath = saveImageToInternalStorage(context, currentUri)
 
             if (playlistId == null) {
                 val newPlaylist = Playlist(
                     name = currentName,
                     description = currentDescription,
-                    image = currentImagePath,
+                    image = finalImagePath,
                 )
                 playlistsRepository.createPlaylist(newPlaylist)
             } else {
@@ -64,9 +102,13 @@ class NewPlaylistViewModel(
                     val updatedPlaylist = it.copy(
                         name = currentName,
                         description = currentDescription,
-                        image = currentImagePath
+                        image = finalImagePath
                     )
                     playlistsRepository.updatePlaylist(updatedPlaylist)
+
+                    if (oldImagePath != null && oldImagePath != finalImagePath) {
+                        deleteImageFile(oldImagePath)
+                    }
                 }
             }
         }

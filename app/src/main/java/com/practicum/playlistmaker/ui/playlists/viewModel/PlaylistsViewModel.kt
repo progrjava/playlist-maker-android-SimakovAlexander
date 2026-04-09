@@ -36,4 +36,8 @@ class PlaylistsViewModel(
     fun getTracksCountForPlaylist(playlistId: Long): Flow<Int> {
         return playlistsRepository.getTracksCountForPlaylist(playlistId)
     }
+
+    suspend fun deletePlaylist(playlist: Playlist) {
+        playlistsRepository.deletePlaylist(playlist)
+    }
 }

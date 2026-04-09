@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,6 +34,6 @@ fun CircularProgressIndicator() {
         imageVector = Icons.Outlined.Refresh,
         contentDescription = null,
         modifier = Modifier.size(120.dp).rotate(rotationAngle),
-        tint = BluePrimary
+        tint = MaterialTheme.colorScheme.primary
     )
 }

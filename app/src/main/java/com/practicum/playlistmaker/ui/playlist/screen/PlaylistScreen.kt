@@ -1,13 +1,13 @@
 package com.practicum.playlistmaker.ui.playlist.screen
 
 import android.content.Intent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,21 +35,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CircularProgressIndicator
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.common.DeleteAlertDialog
 import com.practicum.playlistmaker.ui.common.TrackListItem
-import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistViewModel
 import com.practicum.playlistmaker.ui.playlist.components.PlaylistListItem
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.IconPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
+import com.practicum.playlistmaker.ui.playlist.viewModel.PlaylistViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +78,7 @@ fun PlaylistScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -88,15 +89,20 @@ fun PlaylistScreen(
                 )
         ) {
             playlist?.let { pl ->
-                Image(
+                AsyncImage(
+                    model = pl.image,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
                             bottom = 16.dp,
                             start = 24.dp,
                             end = 24.dp
-                        ),
-                    painter = painterResource(id = R.drawable.ic_playlist),
+                        )
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.ic_playlist),
+                    error = painterResource(id = R.drawable.ic_playlist),
                     contentDescription = stringResource(R.string.playlist_cover),
                 )
                 Row(
@@ -114,18 +120,21 @@ fun PlaylistScreen(
                         Text(
                             text = pl.name,
                             style = MaterialTheme.typography.headlineSmall,
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         pl.description?.let {
                             Text(
                                 text = it,
                                 style = MaterialTheme.typography.displaySmall,
+                                color = MaterialTheme.colorScheme.onBackground
                             )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = getDurationText(tracks),
                             style = MaterialTheme.typography.displaySmall,
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                     IconButton(
@@ -134,7 +143,7 @@ fun PlaylistScreen(
                         Icon(
                             imageVector = Icons.Outlined.MoreVert,
                             contentDescription = stringResource(R.string.playlist_more_desc),
-                            tint = IconPrimary,
+                            tint = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -196,7 +205,7 @@ fun PlaylistScreen(
             ModalBottomSheet(
                 sheetState = sheetState,
                 onDismissRequest = { showBottomSheet = false },
-                containerColor = BackgroundPrimary
+                containerColor = MaterialTheme.colorScheme.background
             ) {
                 Column(
                     modifier = Modifier.padding(bottom = 32.dp)
@@ -204,12 +213,13 @@ fun PlaylistScreen(
                     PlaylistListItem(
                         playlist = pl,
                         tracksCount = tracks.size,
-                    ) { showBottomSheet = false }
+                        onClick = { showBottomSheet = false }
+                    )
                     Spacer(modifier = Modifier.height(32.dp))
                     Text(
                         text = stringResource(R.string.share_playlist),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = TextPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
@@ -231,7 +241,7 @@ fun PlaylistScreen(
                     Text(
                         text = stringResource(R.string.edit_playlist_info),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = TextPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
@@ -246,7 +256,7 @@ fun PlaylistScreen(
                     Text(
                         text = stringResource(R.string.delete_playlist),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = TextPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {

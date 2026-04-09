@@ -22,15 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.theme.BluePrimary
-import com.practicum.playlistmaker.ui.theme.IconHint
-import com.practicum.playlistmaker.ui.theme.TextHint
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun SearchBarCustom(
@@ -50,7 +48,7 @@ fun SearchBarCustom(
             imageVector = Icons.Default.Search,
             contentDescription = null,
             modifier = Modifier.size(20.dp),
-            tint = IconHint
+            tint = MaterialTheme.colorScheme.outline
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -62,7 +60,7 @@ fun SearchBarCustom(
             },
             singleLine = true,
             textStyle = MaterialTheme.typography.bodyLarge.copy(
-                color = TextPrimary
+                color = Color.Black
             ),
             cursorBrush = SolidColor(BluePrimary),
             modifier = Modifier
@@ -76,7 +74,7 @@ fun SearchBarCustom(
                 Text(
                     text = stringResource(R.string.search_hint),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = TextHint
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
             innerTextField()
@@ -89,7 +87,7 @@ fun SearchBarCustom(
                 modifier = Modifier
                     .size(20.dp)
                     .clickable { onClearSearch() },
-                tint = IconHint
+                tint = MaterialTheme.colorScheme.outline
             )
         }
     }

@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,8 +32,6 @@ import com.practicum.playlistmaker.domain.model.Track
 import com.practicum.playlistmaker.ui.common.CircularProgressIndicator
 import com.practicum.playlistmaker.ui.common.TrackListItem
 import com.practicum.playlistmaker.ui.theme.BluePrimary
-import com.practicum.playlistmaker.ui.theme.TextOnPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun InitialStateView() {
@@ -47,7 +46,7 @@ fun InitialStateView() {
         Text(
             text = stringResource(R.string.search_initial),
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimary
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -60,7 +59,7 @@ fun SearchingView() {
         Text(
             stringResource(R.string.search_searching),
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimary
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -77,7 +76,7 @@ fun NothingFoundView() {
         Text(
             stringResource(R.string.search_nothing_found),
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimary
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -108,14 +107,14 @@ fun FailView(error: String, onRefresh: () -> Unit) {
         Text(
             text = stringResource(R.string.search_error),
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimary,
+            color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = error,
             style = MaterialTheme.typography.bodyMedium,
-            color = TextPrimary,
+            color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 24.dp)
         )
@@ -123,8 +122,8 @@ fun FailView(error: String, onRefresh: () -> Unit) {
         Button(
             onClick = onRefresh,
             colors = ButtonDefaults.buttonColors(
-                containerColor = BluePrimary,
-                contentColor = TextOnPrimary
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = Color.White
             )
         ) {
             Text(

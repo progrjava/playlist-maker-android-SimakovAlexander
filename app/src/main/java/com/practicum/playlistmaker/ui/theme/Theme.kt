@@ -8,34 +8,45 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme = darkColorScheme(
-    primary = BluePrimary,
-    onPrimary = TextOnPrimary,
-    surface = BackgroundPrimary,
-    onSurface = TextPrimary,
-    background = BackgroundPrimary,
-    onBackground = TextPrimary,
-    outline = GrayLight,
-)
 
 private val LightColorScheme = lightColorScheme(
     primary = BluePrimary,
-    onPrimary = TextOnPrimary,
-    surface = BackgroundPrimary,
-    onSurface = TextPrimary,
-    background = BackgroundPrimary,
-    onBackground = TextPrimary,
-    outline = GrayLight
+    onPrimary = Color.White,
+
+    secondary = LightBackgroundSecondary,
+
+    background = LightBackgroundPrimary,
+    onBackground = LightTextPrimary,
+
+    surface = LightBackgroundPrimary,
+    onSurface = LightTextPrimary,
+
+    outline = LightIconSecondary
 )
 
+
+private val DarkColorScheme = darkColorScheme(
+    primary = BluePrimary,
+    onPrimary = Color.White,
+
+    secondary = Color.White,
+
+    background = DarkBackgroundPrimary,
+    onBackground = DarkTextPrimary,
+
+    surface = DarkBackgroundPrimary,
+    onSurface = DarkTextPrimary,
+
+    outline = DarkIconThirdly
+)
 
 @Composable
 fun PlaylistMakerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

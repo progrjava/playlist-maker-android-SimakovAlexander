@@ -39,10 +39,6 @@ import coil.compose.AsyncImage
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.IconSecondary
-import com.practicum.playlistmaker.ui.theme.TextHint
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 import com.practicum.playlistmaker.ui.trackDetails.components.PlaylistBottomSheet
 import kotlinx.coroutines.launch
 
@@ -66,7 +62,7 @@ fun TrackDetailsScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -94,14 +90,16 @@ fun TrackDetailsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp)
-                        .padding(top = 24.dp, bottom = 12.dp)
+                        .padding(top = 24.dp, bottom = 12.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
                     text = currentTrack.artistName,
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = 8.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Row(
                     modifier = Modifier
@@ -114,7 +112,7 @@ fun TrackDetailsScreen(
                         onClick = { showBottomSheet = true },
                         modifier = Modifier
                             .size(56.dp)
-                            .background(IconSecondary, CircleShape)
+                            .background(MaterialTheme.colorScheme.outline, CircleShape)
                     ) {
                         Icon(
                             imageVector = Icons.Filled.LibraryAdd,
@@ -131,7 +129,7 @@ fun TrackDetailsScreen(
                         },
                         modifier = Modifier
                             .size(56.dp)
-                            .background(IconSecondary, CircleShape)
+                            .background(MaterialTheme.colorScheme.outline, CircleShape)
                     ) {
                         Icon(
                             imageVector =
@@ -152,12 +150,12 @@ fun TrackDetailsScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.track_duration),
-                        color = TextHint,
+                        color = MaterialTheme.colorScheme.outline,
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
                         text = currentTrack.trackTime,
-                        color = TextPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

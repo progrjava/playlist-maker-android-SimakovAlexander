@@ -2,31 +2,21 @@ package com.practicum.playlistmaker.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Основные цвета бренда
 val BluePrimary = Color(0xFF3772E7)
-
-// Текстовые цвета
-val TextPrimary = Color(0xFF000000)
-val TextHint = Color(0xFFBDBDBD)
-val TextOnPrimary = Color(0xFFFFFFFF)
-
-// Фоновые цвета
-val BackgroundPrimary = Color(0xFFFFFFFF)
-val BackgroundSecondary = Color(0xFFE6E8EB)
-val BackgroundBrand = Color(0xFF3772E7)
-val GrayBackground = Color(0xFFAEAFB4)
-
-// Иконки
-val IconPrimary = Color(0xFF000000)
-val IconSecondary = Color(0xFFBDBDBD)
-val IconHint = Color(0xFFBDBDBD)
-
-// Переключатели
-val SwitchUncheckedKnob = Color(0xFFAEAFB4)
-val SwitchUncheckedTrack = Color(0xFFE6E8EB)
-val SwitchCheckedKnob = Color(0xFF3772E7)
-val SwitchCheckedTrack = Color(0xFF284581)
-
-// Состояния
 val Transparent = Color.Transparent
-val GrayLight = Color(0xFFBDBDBD)
+
+// Light Theme
+val LightBackgroundPrimary = Color(0xFFFFFFFF)
+val LightBackgroundSecondary = Color(0xFFE6E8EB)
+val LightTextPrimary = Color(0xFF1A1B22)
+val LightIconSecondary = Color(0xFFAEAFB4)
+
+// Dark Theme
+val DarkBackgroundPrimary = Color(0xFF1A1B22)
+val DarkTextPrimary = Color(0xFFFFFFFF)
+val DarkIconThirdly = Color(0xFFAEAFB4)
+
+
+
+
+

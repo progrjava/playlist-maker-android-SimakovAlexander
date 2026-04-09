@@ -1,5 +1,6 @@
 package com.practicum.playlistmaker.ui.settings.screen
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.SupportAgent
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,7 +22,6 @@ import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.settings.components.SettingsRowItem
 import com.practicum.playlistmaker.ui.settings.components.SettingsSwitchRowItem
 import com.practicum.playlistmaker.ui.settings.viewModel.SettingsViewModel
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
 import com.practicum.playlistmaker.ui.settings.helpers.rememberSettingsStrings
 import org.koin.androidx.compose.koinViewModel
 
@@ -29,6 +30,7 @@ fun SettingsScreen(
     onBackClick: () -> Unit = {},
     viewModel: SettingsViewModel = koinViewModel()
 ) {
+    val systemDarkTheme = isSystemInDarkTheme()
     val context = LocalContext.current
     val isDarkTheme by viewModel.isDarkTheme.collectAsState()
     val strings = rememberSettingsStrings()
@@ -41,7 +43,7 @@ fun SettingsScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -50,7 +52,7 @@ fun SettingsScreen(
         ) {
             SettingsSwitchRowItem(
                 title = stringResource(R.string.dark_mode_switch),
-                isChecked = isDarkTheme,
+                isChecked = isDarkTheme ?: systemDarkTheme,
                 onCheckedChange = { viewModel.onThemeChanged(it) }
             )
             SettingsRowItem(

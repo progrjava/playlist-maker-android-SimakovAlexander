@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,9 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.practicum.playlistmaker.ui.theme.IconPrimary
-import com.practicum.playlistmaker.ui.theme.IconSecondary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun RowItem(
@@ -44,7 +42,7 @@ fun RowItem(
                     imageVector = leadingIcon,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp),
-                    tint = IconPrimary
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
@@ -53,7 +51,7 @@ fun RowItem(
                 text = title,
                 style = textStyle,
                 modifier = Modifier.weight(1f),
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             if (trailingIcon != null) {
@@ -61,7 +59,7 @@ fun RowItem(
                     imageVector = trailingIcon,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp),
-                    tint = IconSecondary
+                    tint = MaterialTheme.colorScheme.outline
                 )
             }
         }

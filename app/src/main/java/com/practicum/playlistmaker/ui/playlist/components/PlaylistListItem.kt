@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker.ui.playlist.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,35 +10,46 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Playlist
-import com.practicum.playlistmaker.ui.theme.TextHint
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun PlaylistListItem(
     playlist: Playlist,
     tracksCount: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { onClick.invoke() })
+            .combinedClickable(
+                onClick = { onClick.invoke() },
+                onLongClick = { onLongClick?.invoke() }
+            )
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Image(
-            modifier = Modifier.size(45.dp),
-            painter = painterResource(id = R.drawable.ic_music),
+        AsyncImage(
+            model = playlist.image,
+            modifier = Modifier
+                .size(45.dp)
+                .clip(RoundedCornerShape(2.dp)),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.ic_music),
+            error = painterResource(id = R.drawable.ic_music),
             contentDescription = playlist.name,
         )
         Spacer(modifier = Modifier.width(8.dp))
@@ -50,14 +60,14 @@ fun PlaylistListItem(
             Text(
                 playlist.name,
                 style = MaterialTheme.typography.bodyLarge,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(4.dp))
             val text = "$tracksCount " + tracksCount.pluralize("трек", "трека", "треков")
             Text(
                 text,
                 style = MaterialTheme.typography.bodySmall,
-                color = TextHint
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
     }

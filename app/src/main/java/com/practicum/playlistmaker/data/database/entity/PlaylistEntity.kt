@@ -9,5 +9,5 @@ data class PlaylistEntity(
     val playlistId: Long = 0,
     val name: String,
     val description: String?,
-    val imagePath: String?
+    val imagePath: String? = null
 )

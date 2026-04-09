@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,10 +38,6 @@ import com.practicum.playlistmaker.ui.search.components.SearchBarCustom
 import com.practicum.playlistmaker.ui.search.components.SearchingView
 import com.practicum.playlistmaker.ui.search.viewModel.SearchState
 import com.practicum.playlistmaker.ui.search.viewModel.SearchViewModel
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.BackgroundSecondary
-import com.practicum.playlistmaker.ui.theme.IconHint
-
 
 @Composable
 fun SearchScreen(
@@ -83,7 +80,7 @@ fun SearchScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -96,7 +93,7 @@ fun SearchScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(color = BackgroundSecondary)
+                        .background(color = MaterialTheme.colorScheme.secondary)
                         .padding(horizontal = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -115,7 +112,7 @@ fun SearchScreen(
                         HorizontalDivider(
                             modifier = Modifier.fillMaxWidth(),
                             thickness = 1.dp,
-                            color = IconHint
+                            color = MaterialTheme.colorScheme.outline
                         )
                         HistoryRequests(
                             historyList = historyList,

@@ -1,12 +1,21 @@
 package com.practicum.playlistmaker.ui.newPlaylist.screen
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -30,20 +39,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import coil.compose.SubcomposeAsyncImage
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.ui.common.CircularProgressIndicator
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.newPlaylist.viewModel.NewPlaylistViewModel
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.BluePrimary
-import com.practicum.playlistmaker.ui.theme.GrayBackground
-import com.practicum.playlistmaker.ui.theme.TextOnPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @Composable
 fun NewPlaylistScreen(
@@ -55,6 +65,8 @@ fun NewPlaylistScreen(
 
     val nameState by viewModel.name.collectAsState()
     val descriptionState by viewModel.description.collectAsState()
+    val imageUriState by viewModel.imageUri.collectAsState()
+    val context = LocalContext.current
 
     val screenTitle = if (isEditMode)
         stringResource(R.string.edit_playlist_title)
@@ -69,6 +81,22 @@ fun NewPlaylistScreen(
     val name = rememberTextFieldState()
     val description = rememberTextFieldState()
 
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            viewModel.onImageChanged(it.toString())
+        }
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            imagePickerLauncher.launch("image/*")
+        }
+    }
+
     LaunchedEffect(nameState, descriptionState) {
         if (isEditMode) {
             name.edit {
@@ -80,11 +108,13 @@ fun NewPlaylistScreen(
         }
     }
 
+    val bluePrimary = MaterialTheme.colorScheme.primary
+
     val isNameFilled = name.text.toString().isNotBlank()
     val isDescriptionFilled = description.text.toString().isNotBlank()
 
     val animatedColor = animateColorAsState(
-        targetValue = if (isNameFilled) BluePrimary else GrayBackground,
+        targetValue = if (isNameFilled) bluePrimary else MaterialTheme.colorScheme.outline,
         animationSpec = spring()
     )
 
@@ -101,7 +131,7 @@ fun NewPlaylistScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
             Column(
                 modifier = Modifier
@@ -115,17 +145,54 @@ fun NewPlaylistScreen(
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
                             bottom = 32.dp,
                             start = 8.dp,
                             end = 8.dp
-                        ),
-                    painter = painterResource(id = R.drawable.ic_playlist),
-                    contentDescription = "",
-                )
+                        )
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                imagePickerLauncher.launch("image/*")
+                            } else {
+                                when {
+                                    ContextCompat.checkSelfPermission(
+                                        context,
+                                        Manifest.permission.READ_EXTERNAL_STORAGE
+                                    ) == PackageManager.PERMISSION_GRANTED -> {
+                                        imagePickerLauncher.launch("image/*")
+                                    }
+
+                                    else -> {
+                                        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    }
+                                }
+                            }
+                        }
+                ) {
+                    SubcomposeAsyncImage(
+                        model = imageUriState,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = stringResource(R.string.playlist_cover),
+                        loading = {
+                            Box(contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator()
+                            }
+                        },
+                        error = {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_playlist),
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    )
+                }
                 OutlinedTextField(
                     state = name,
                     modifier = Modifier
@@ -149,14 +216,14 @@ fun NewPlaylistScreen(
                         bottom = 18.dp,
                     ),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = if (isNameFilled) BluePrimary else BluePrimary,
-                        unfocusedBorderColor = if (isNameFilled) BluePrimary else GrayBackground,
+                        focusedBorderColor = bluePrimary,
+                        unfocusedBorderColor = if (isNameFilled) bluePrimary else MaterialTheme.colorScheme.outline,
 
-                        focusedLabelColor = if (isNameFilled) BluePrimary else BluePrimary,
-                        unfocusedLabelColor = if (isNameFilled) BluePrimary else TextPrimary,
+                        focusedLabelColor = bluePrimary,
+                        unfocusedLabelColor = if (isNameFilled) bluePrimary else MaterialTheme.colorScheme.onBackground,
 
-                        focusedTextColor = TextPrimary,
-                        unfocusedTextColor = TextPrimary,
+                        focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
                     )
                 )
                 OutlinedTextField(
@@ -182,14 +249,14 @@ fun NewPlaylistScreen(
                         bottom = 18.dp,
                     ),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = if (isDescriptionFilled) BluePrimary else BluePrimary,
-                        unfocusedBorderColor = if (isDescriptionFilled) BluePrimary else GrayBackground,
+                        focusedBorderColor = bluePrimary,
+                        unfocusedBorderColor = if (isDescriptionFilled) bluePrimary else MaterialTheme.colorScheme.outline,
 
-                        focusedLabelColor = if (isDescriptionFilled) BluePrimary else BluePrimary,
-                        unfocusedLabelColor = if (isDescriptionFilled) BluePrimary else TextPrimary,
+                        focusedLabelColor = bluePrimary,
+                        unfocusedLabelColor = if (isDescriptionFilled) bluePrimary else MaterialTheme.colorScheme.onBackground,
 
-                        focusedTextColor = TextPrimary,
-                        unfocusedTextColor = TextPrimary,
+                        focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
                     )
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -197,7 +264,7 @@ fun NewPlaylistScreen(
                     onClick = {
                         viewModel.onNameChanged(name.text.toString())
                         viewModel.onDescriptionChanged(description.text.toString())
-                        viewModel.onSaveClick()
+                        viewModel.onSaveClick(context)
                         onBackClick()
                     },
                     modifier = Modifier
@@ -214,9 +281,9 @@ fun NewPlaylistScreen(
                     ),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = animatedColor.value,
-                        contentColor = TextOnPrimary,
+                        contentColor = MaterialTheme.colorScheme.onBackground,
                         disabledContainerColor = animatedColor.value,
-                        disabledContentColor = TextOnPrimary
+                        disabledContentColor = MaterialTheme.colorScheme.onBackground
                     )
                 ) {
                     Text(

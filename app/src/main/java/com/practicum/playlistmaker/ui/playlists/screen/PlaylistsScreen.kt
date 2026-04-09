@@ -14,18 +14,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.model.Playlist
 import com.practicum.playlistmaker.ui.common.CustomTopBar
-import com.practicum.playlistmaker.ui.playlists.components.AddFloatingButton
+import com.practicum.playlistmaker.ui.common.DeleteAlertDialog
 import com.practicum.playlistmaker.ui.playlist.components.PlaylistListItem
+import com.practicum.playlistmaker.ui.playlists.components.AddFloatingButton
 import com.practicum.playlistmaker.ui.playlists.viewModel.PlaylistsViewModel
 import com.practicum.playlistmaker.ui.search.components.CenteredColumn
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.TextPrimary
+import kotlinx.coroutines.launch
 
 @Composable
 fun PlaylistsScreen(
@@ -35,6 +40,8 @@ fun PlaylistsScreen(
     onBackClick: () -> Unit
 ) {
     val playlists by playlistsViewModel.playlists.collectAsState(emptyList())
+    var playlistToDelete by remember { mutableStateOf<Playlist?>(null) }
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -44,7 +51,7 @@ fun PlaylistsScreen(
                 showBackButton = true
             )
         },
-        containerColor = BackgroundPrimary
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -62,7 +69,7 @@ fun PlaylistsScreen(
                     Text(
                         stringResource(R.string.playlists_not_found),
                         style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimary
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
             } else {
@@ -71,16 +78,29 @@ fun PlaylistsScreen(
                         val tracksCount by playlistsViewModel.getTracksCountForPlaylist(playlists[index].id).collectAsState(0)
                         PlaylistListItem(
                             playlist = playlists[index],
-                            tracksCount = tracksCount
-                        ) {
-                            navigateToPlaylist(playlists[index].id)
-                        }
+                            tracksCount = tracksCount,
+                            onClick = { navigateToPlaylist(playlists[index].id) },
+                            onLongClick = { playlistToDelete = playlists[index] }
+                        )
                     }
                 }
             }
             AddFloatingButton {
                 addNewPlaylist()
             }
+        }
+
+        playlistToDelete?.let { playlist ->
+            DeleteAlertDialog(
+                onConfirm = {
+                    scope.launch {
+                        playlistsViewModel.deletePlaylist(playlist)
+                        playlistToDelete = null
+                    }
+                },
+                onDismiss = { playlistToDelete = null },
+                objectToDelete = playlist
+            )
         }
     }
 }

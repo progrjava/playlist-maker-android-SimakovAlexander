@@ -17,8 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.practicum.playlistmaker.ui.theme.IconHint
 
 @Composable
 fun HistoryRequests(
@@ -42,12 +42,13 @@ fun HistoryRequests(
                     imageVector = Icons.Filled.History,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp),
-                    tint = IconHint
+                    tint = MaterialTheme.colorScheme.outline
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = historyList[index],
                     style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Black
                 )
             }
         }

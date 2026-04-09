@@ -7,6 +7,7 @@ import com.practicum.playlistmaker.data.database.AppDatabase
 import com.practicum.playlistmaker.data.network.ITunesApiService
 import com.practicum.playlistmaker.data.network.RetrofitNetworkClient
 import com.practicum.playlistmaker.data.preferences.SearchHistoryPreferences
+import com.practicum.playlistmaker.data.preferences.ThemePreferences
 import com.practicum.playlistmaker.data.repository.PlaylistsRepositoryImpl
 import com.practicum.playlistmaker.data.repository.SearchHistoryRepositoryImpl
 import com.practicum.playlistmaker.data.repository.TracksRepositoryImpl
@@ -26,6 +27,9 @@ val dataModule = module {
     single { androidContext().dataStore }
 
     single { SearchHistoryPreferences(get()) }
+
+    // Добавляем ThemePreferences в Koin
+    single { ThemePreferences(androidContext()) }
 
     single<ITunesApiService> {
         Retrofit.Builder()

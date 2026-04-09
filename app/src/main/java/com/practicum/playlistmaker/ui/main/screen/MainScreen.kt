@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.LibraryMusic
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,9 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.ui.common.CustomTopBar
 import com.practicum.playlistmaker.ui.main.components.MainScreenRowItem
-import com.practicum.playlistmaker.ui.theme.BackgroundBrand
-import com.practicum.playlistmaker.ui.theme.BackgroundPrimary
-import com.practicum.playlistmaker.ui.theme.TextOnPrimary
 import com.practicum.playlistmaker.ui.theme.Transparent
 
 @Preview(device = "id:pixel_5", showSystemUi = true, name = "main-preview")
@@ -39,8 +37,8 @@ fun MainScreen(
         topBar = {
             CustomTopBar(
                 text = stringResource(R.string.app_name),
-                barColor = BackgroundBrand,
-                contentColor = TextOnPrimary
+                barColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         },
         containerColor = Transparent,
@@ -49,11 +47,11 @@ fun MainScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = innerPadding.calculateTopPadding())
-                    .background(color = BackgroundBrand)
+                    .background(color = MaterialTheme.colorScheme.primary)
             ) {
                 Surface(
                     shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                    color = BackgroundPrimary,
+                    color = MaterialTheme.colorScheme.background,
                     modifier = Modifier
                         .fillMaxSize()
                         .align(Alignment.TopCenter)

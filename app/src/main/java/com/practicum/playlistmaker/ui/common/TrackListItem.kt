@@ -27,10 +27,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.model.Track
-import com.practicum.playlistmaker.ui.theme.IconHint
-import com.practicum.playlistmaker.ui.theme.IconSecondary
-import com.practicum.playlistmaker.ui.theme.TextHint
-import com.practicum.playlistmaker.ui.theme.TextPrimary
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -68,7 +64,7 @@ fun TrackListItem(
             Text(
                 track.trackName,
                 style = MaterialTheme.typography.bodyLarge,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onBackground
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -76,20 +72,20 @@ fun TrackListItem(
                 Text(
                     track.artistName,
                     style = MaterialTheme.typography.bodySmall,
-                    color = TextHint
+                    color = MaterialTheme.colorScheme.outline
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Icon(
                     imageVector = Icons.Filled.Circle,
                     contentDescription = null,
                     modifier = Modifier.size(5.dp),
-                    tint = IconHint
+                    tint = MaterialTheme.colorScheme.outline
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     track.trackTime,
                     style = MaterialTheme.typography.bodySmall,
-                    color = TextHint
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
         }
@@ -98,7 +94,7 @@ fun TrackListItem(
             imageVector = Icons.Outlined.ChevronRight,
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = IconSecondary
+            tint = MaterialTheme.colorScheme.outline
         )
     }
 }
